@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Z's Stock Simulator</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script>
+
+	$(document).ready(function () {
+	    $('.form-div0').show();
+	    $('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.form-div7,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();
+$("#mainSelection").change(function() {
+ if ($(this).val() == "GBM") {
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.form-div7,.description-GBM').show();
+  }
+else if ($(this).val() == "Bootstrap") {
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-EfficientFrontier').hide();    
+$('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.form-div7,.description-Bootstrap').show();
+  } 
+else if ($(this).val() == "VecAR") {
+$('.noOfIter,.percentilerange,.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.form-div7,.description-VecAR').show();
+  }
+else if ($(this).val() == "HoltWinters") {
+$('.noOfIter,.percentilerange,.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.seasonality,.form-div7,.description-HoltWinters').show();
+  }     
+else if ($(this).val() == "candlestickChart") {
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.tickers,.startend,.form-div7,.description-candlestickChart').show();
+  }
+else if ($(this).val() == "returnsDist") {
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.tickers,.weights,.portfoliovalue,.startend,.form-div7,.description-returnsDist').show();
+  }
+else if ($(this).val() == "RSIChart") {
+$('.windowSize2,.windowSize3,.noOfStdDev,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.tickers,.startend,.windowSize1,.averagetype,.form-div7,.description-RSIChart').show();
+  }
+else if ($(this).val() == "BBChart") {
+$('.windowSize2,.windowSize3,.averagetype,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.tickers,.startend,.windowSize1,.noOfStdDev,.form-div7,.description-BBChart').show();
+  }
+else if ($(this).val() == "MovingAve") {
+$('.windowSize2,.windowSize3,.noOfStdDev,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.averagetype,.windowSize1,.form-div7,.description-MovingAve').show();
+  }
+else if ($(this).val() == "ARIMAGARCH") {
+$('.windowSize2,.windowSize3,.noOfStdDev,.noOfIter,.percentilerange,.averagetype,.windowSize1,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.form-div7,.description-ARIMAGARCH').show();
+  }
+else if ($(this).val() == "MACDChart") {
+$('.noOfStdDev,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.averageType,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();     
+$('.tickers,.startend,.windowSize1,.windowSize2,.windowSize3,.form-div7,.description-MACDChart').show();
+  }
+else if ($(this).val() == "EfficientFrontier") {
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3, .noOfStdDev,.weights,.backtestdays,.percentilerange,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap').hide();    
+$('.tickers,.portfoliovalue,.startend,.forecastdate,.noOfIter,.riskfreerate,.simMethod,.form-div7,.description-EfficientFrontier').show();
+  }
+});
+$("#mainSelection").trigger("change");
+           
+	});
+
+var StartDate = document.getElementById('StartDate');
+var EndDate = document.getElementById('EndDate');
+
+StartDate.addEventListener('change', function() {
+    if (StartDate.value)
+        EndDate.min = StartDate.value;
+}, false);
+EndDate.addEventLiseter('change', function() {
+    if (EndDate.value)
+        StartDate.max = EndDate.value;
+}, false);   
+    
+</script>
+    
+<script type="text/javascript">// <![CDATA[
+        function loading(){
+            $("#loading").show();
+            $("#content").hide();       
+        }
+// ]]></script> 
+
+<style>
+.loading {
+    width: 35px;
+    height: 35px;
+    display: none;
+    background: url(/static/loadingimage.gif) no-repeat;
+    cursor: wait;
+    }    
+</style>
+    
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+</head>
+<body>
+    
+<h1>Stock Price Simulator</h1>
+<p><img src="https://i.kym-cdn.com/entries/icons/facebook/000/029/959/Screen_Shot_2019-06-05_at_1.26.32_PM.jpg" alt="Stonks | Know Your Meme" width="621" height="350" /></p>
+<p><a href="https://knowyourmeme.com/memes/stonks" target="_blank" rel="noopener">Image Source:KnowYourMeme.com</a></p>
+<p>&nbsp;</p>
+<p>Hi ! I'm Z and this is a simple Stock Price Forecasting Web App that I built for fun using a combination of code from different online articles (sources listed below) and some of my own original code.</p>
+<p>&nbsp;</p>
+<p><span style="text-decoration: underline;"><strong>About This Web App</strong></span></p>
+<p>The web app allows you to analyze historical stock prices and also perform short term forecasts (~1-2wks) and compare results between different 'traditional' time series forecasting methods (ARIMA, Exponential Smoothing, etc)&nbsp;</p>
+<p>Pick an option from the list below and refer to the notes for more details</p>
+<p>Unless otherwise stated, all calculations reference the Adjusted Closing Prices which are extracted from Yahoo Finance through Python's PandasDataReader library and processed in the backend by a Python script. </p>
+<p>By default this web-app only plots and tabulates the last 60 "tail" values of any actual vs predicted stock prices. However the full table is available in the Jupyter Notebook iPYNB version of this file available on Github</p>
+<p>Results will open up in a new tab to allow for easy comparison between different selections.&nbsp;</p>
+<p>Be aware that some selections need more time for the results to be calculated (E.g. Auto-Holt Winters , Efficient Portfolio Weights)</p>
+
+<p>Please Note: I am not a financial expert of any sort so the use of this tool for any investment decisions will be at your own risk ! &nbsp;</p>
+<p>&nbsp;</p>
+    
+<form action="/results" method="post" target="_blank" style="text-align: left;font-family: Montserrat, sans-serif">
+
+<div class="form-div0">
+<label for="mainSelection">
+I want to run a/an </label><select name="mainSelection" id="mainSelection">
+<option value="" disabled="disabled" selected="selected">-Select Option Below-</option>
+<option value="candlestickChart">...Analysis > Candlestick Chart </option>
+<option value="returnsDist">...Analysis > Log Daily Returns </option>
+<option value="RSIChart">...Analysis > Relative Strength Index Chart (RSI) </option>
+<option value="MACDChart">...Analysis > Moving Average Convergence Divergence (MACD) </option>
+<option value="BBChart">...Analysis > Bollinger Bands Chart </option>
+<option value="MovingAve">...Forecast > Moving Average Forecast (Univariate)</option>
+<option value="ARIMAGARCH">...Forecast > Auto-ARIMA+GARCH Forecast (Univariate)</option>
+<option value="HoltWinters">...Forecast > Auto-Holt Winters Forecast (Univariate)</option>
+<option value="VecAR">...Forecast > Vector Auto Regression Forecast (Multivariate)</option>    
+<option value="GBM">...Forecast > Geometric Brownian Motion (GBM) Forecast (Multivariate)</option>
+<option value="Bootstrap">...Forecast > Bootstrap Sampling Forecast (Multivariate)</option>
+<option value="EfficientFrontier">...Forecast > Portfolio Weights For Optimal Risk-Returns</option>
+</select>
+</div>
+
+<br>
+
+<div class="tickers">
+<label for="tickerPortfolio">Enter Stock Ticker Symbols - if multiple please separate by comma (e.g. AAPL,MSFT,NFLX ) :&nbsp;</label>
+<br /><input name="tickerPortfolio" id="tickerPortfolio" type="text" value="AAPL,MSFT,NFLX" /> <br /><br />
+</div>
+
+<div class="weights">
+<label for="portfolioWeights">Enter Weights By Value in % - if single stock enter 100.0 otherwise if multiple stocks separate by comma (e.g. 20.0,40.0, 40.0 ) :&nbsp;</label>
+<br /><input name="portfolioWeights" id="portfolioWeights" type="text" value="20.0,40.0,40.0" /> <br /><br />
+</div>
+
+<div class="portfoliovalue">
+<label for="portfolioValue">Enter Portfolio $ Value (*Invested At End Date)</label>
+<br /><input name="portfolioValue" id="portfolioValue" type="text" value="1000" /> <br /><br />
+</div>
+
+<div class="startend">
+<label for="StartDate">Start Date For Historical Prices</label><br /><input name="StartDate" id="StartDate" type="date" value="2019-01-02" /> <br /><br />
+<label for="EndDate">End Date For Historical Prices</label><br /><input name="EndDate" id="EndDate" type="date" value="2020-12-24" /> <br /><br />
+</div>
+
+<div class="forecastdate">
+<label for="ForecastDate">'Future' Forecast Date</label><br /><input name="ForecastDate" id="ForecastDate" type="date" value="2021-01-31" /> <br /><br />
+</div>
+
+<div class="backtestdays">
+<label for="BacktestDays">Backtest Days NB: If Set To 0 Then ALL Historical Data Up Till End Date Will Be Used To Build Forecast</label><br /><input max="30" min="0" input name="BacktestDays" id="BacktestDays" type="number" value="0" /> <br /><br />
+</div>
+    
+<div class="seasonality">
+<label for="seasonality">Length Of Seasonal Period (Days)</label><br /><input min="0" input name="seasonality" id="seasonality" type="number" value="252" /> <br /><br />
+</div>
+    
+<div class="averagetype">
+<label for="AverageType">Average Type:</label><br /><select name="AverageType" id="AverageType">
+<option value="EWMA" selected="selected">Exponentially Weighted Moving Average</option>
+<option value="SMA">Simple Moving Average</option>
+</select>
+</div>
+
+<div class="windowSize1">
+<label for="WindowSize1">Period Window Size:</label><br />
+<input max="360" min="1" name="WindowSize1" id="WindowSize1" type="number" value="12" /> <br /><br />
+</div>
+
+<div class="windowSize2">
+<label for="WindowSize2">Period Window Size 2:</label><br />
+<input max="360" min="1" name="WindowSize2" id="WindowSize2" type="number" value="26" /> <br /><br />
+</div>
+    
+<div class="windowSize3">
+<label for="WindowSize3">Period Window Size 3:</label><br />
+<input max="360" min="1" name="WindowSize3" id="WindowSize3" type="number" value="9" /> <br /><br />
+</div>
+
+<div class="noOfStdDev">
+<label for="noOfStdDev">Size Of Std Dev Bars:</label><br /><input max="6" min="1" name="noOfStdDev" id="noOfStdDev" type="number" value="2" /> <br /><br />
+</div>
+
+<div class="noOfIter">
+<label for="NoOfIter">No Of Monte Carlo Iterations</label><br /><input max="1000" min="1" name="NoOfIter" id="NoOfIter" type="number" value="10" /> <br /><br />
+</div>
+
+<div class="percentilerange">
+<label for="PercentileRange">Percentile Range:</label><br /><select name="PercentileRange" id="PercentileRange">
+<option value="P10_P90" selected="selected">P10-P90</option>
+<option value="P20_P80">P20-P80</option>
+<option value="P25_P85">P25-P85</option>
+</select>
+</div>
+
+<div class="riskfreerate">
+<label for="riskfreerate">Annual Risk Free Rate % (Example reference <a href="http://www.market-risk-premia.com/market-risk-premia.html" target="_blank">Market-Risk-Premia Website</a>):</label><br /><input max="100.00" min="0.00" name="riskfreerate" id="riskfreerate" type="number" step="0.001" value="0.90" /> <br /><br />
+</div>
+
+<div class="simMethod">
+<label for="simMethod">Simulation Method:</label><br /><select name="simMethod" id="simMethod">
+<option value="GBM" selected="selected">GBM</option>
+<option value="Bootstrap">Bootstrap</option>
+</select>
+</div>
+
+<br />
+<div class="form-div7">
+<button type="submit" value="Submit" onclick="loading();">Show Simulation Results!</button>
+</div>
+</form>
+
+<div class="description-candlestickChart">
+<p>&nbsp;</p>
+<table style="height: 28px; width: 95%; border-collapse: collapse;" border="1">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 10px;">Type</td>
+<td style="width: 18.4237%; height: 10px;">Title</td>
+<td style="width: 39.5614%; height: 10px;">Description</td>
+<td style="width: 19.9905%; height: 10px;">More Detailed References</td>
+<td style="width: 10.942%; height: 10px;">Source&nbsp; Code&nbsp;</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 18px;">Analysis</td>
+<td style="width: 18.4237%; height: 18px;">Candlestick Charts</td>
+<td style="width: 39.5614%; height: 18px;">Candlestick charts show daily open, high, low, and close price and are used to determine possible price movement based on past patterns</td>
+<td style="width: 19.9905%; height: 18px;"><a href="https://www.investopedia.com/trading/candlestick-charting-what-is-it/" target="_blank" rel="noopener">Candlestick Charting (Investopedia.com)</a></td>
+<td style="width: 10.942%; height: 18px;">
+<p>Adapted from:</p>
+<p><a href="https://medium.com/swlh/generating-candlestick-charts-from-scratch-ef6e1d3cf0e9" target="_blank" rel="noopener">https://medium.com/swlh/generating-candlestick-charts-from-scratch-ef6e1d3cf0e9</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<img src="https://blog.quadency.com/content/images/2020/08/candlestick-patterns-crypto-trading-quadency-1.png" width='1200vw' height='auto' margin='auto 0' alt="candlesticks">
+<p><a href="https://quadency.com" target="_blank">Image Source:Quadency.com</a></p>
+</div>
+    
+<div class="description-returnsDist">
+<p>&nbsp;</p>
+<table style="height: 28px; width: 95%; border-collapse: collapse;" border="1">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 10px;">Type</td>
+<td style="width: 18.4237%; height: 10px;">Title</td>
+<td style="width: 39.5614%; height: 10px;">Description</td>
+<td style="width: 19.9905%; height: 10px;">More Detailed References</td>
+<td style="width: 10.942%; height: 10px;">Source&nbsp; Code&nbsp;</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 18px;">Analysis</td>
+<td style="width: 18.4237%; height: 18px;"><span>Log Daily Returns Chart</span></td>
+<td style="width: 39.5614%; height: 18px;">
+<p><span>Log Returns are often used instead of simple returns to help normalize the underlying time series before applying other forecasting techniques.</span></p>
+<p style="text-align: left;"><sub><span>Log Returns= </span></sub></p>
+<p style="text-align: left;"><sub><span>ln (Price(t+1)/Price(t))</span></sub></p>
+<p style="text-align: left;"><sub><span>vs</span></sub></p>
+<p style="text-align: left;"><sub><span>Simple Arithmetic Returns= </span></sub></p>
+<p style="text-align: left;"><sub><span>[Price(t+1)-Price(t)]/ Price(t)</span></sub></p>
+<p style="text-align: left;"><span></span></p>
+<p><span>In addition, this option also :-</span></p>
+<ul>
+<li><span>plots the 'best fit' normal distribution for the log returns data</span></li>
+<li><span>plots a Q-Q Chart for the log returns data</span></li>
+<li><span>checks the skew and kurtosis&nbsp; of the distribution;</span></li>
+<li><span>checks if the mean &amp; variance are constant by splitting the start / mid/ end of the training data and comparing them;</span></li>
+<li><span>tests whether the distribution is normally distributed via KS Test;</span><span></span></li>
+<li><span>tests whether the distribution is stationary via a ADF Test;</span></li>
+</ul>
+</td>
+<td style="width: 19.9905%; height: 18px;">
+<p><a href="https://quantivity.wordpress.com/2011/02/21/why-log-returns/" target="_blank" rel="noopener">Why Log Returns ? (Quantivy Blog)</a></p>
+<p></p>
+<p><a href="https://www.real-statistics.com/tests-normality-and-symmetry/statistical-tests-normality-symmetry/kolmogorov-smirnov-test/" target="_blank" rel="noopener">Komologorov Smirnov Test For Normality (Real-Statistics.com)</a></p>
+<p></p>
+<p><a href="https://www.statisticshowto.com/adf-augmented-dickey-fuller-test/" target="_blank" rel="noopener">Augmented Dickey Fuller Test (StatisticsHowTo.com)</a></p>
+<p></p>
+<p><a href="https://www.statisticshowto.com/q-q-plots/" target="_blank" rel="noopener">Q-Q Plots (StatisticsHowTo.com)</a></p>
+</td>
+<td style="width: 10.942%; height: 18px;">
+<p>N/A - Original Content</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p><span style="text-decoration: underline;"><strong>Skewness &amp; Kurtosis</strong></span> (Source <a href="https://www.pinterest.com/pin/422281202809163/">https://www.pinterest.com/pin/422281202809163/ )</a></p>
+<p><img src="https://i.pinimg.com/originals/0f/c7/66/0fc7666e8c1ab2822ad7a8e4fb534b88.gif" alt="Skewness and kurtosis | Statistics math, Ap statistics, Statistics notes" /></p>
+<p><strong><span style="text-decoration: underline;">Q-Q Plot</span> </strong>(Source <a href="https://stats.stackexchange.com/questions/101274/how-to-interpret-a-qq-plot">https://stats.stackexchange.com/questions/101274/how-to-interpret-a-qq-plot</a> )</p>
+<p><img src="https://i.stack.imgur.com/ZXRkL.png" alt="How to interpret a QQ plot - Cross Validated" /></p>
+<p><strong><span style="text-decoration: underline;">Examples Of Stationary vs Non Stationary Series</span></strong>&nbsp;(Source : <a href="https://stats.stackexchange.com/questions/182764/stationarity-tests-in-r-checking-mean-variance-and-covariance">https://stats.stackexchange.com/questions/182764/stationarity-tests-in-r-checking-mean-variance-and-covariance</a>)&nbsp;</p>
+<p><img src="https://i.stack.imgur.com/5K7we.jpg" width="460" height="458" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</div>
+
+<div class="description-RSIChart">
+<p>&nbsp;</p>
+<table style="height: 28px; width: 95%; border-collapse: collapse;" border="1">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 10px;">Type</td>
+<td style="width: 18.4237%; height: 10px;">Title</td>
+<td style="width: 43.9246%; height: 10px;">Description</td>
+<td style="width: 15.6273%; height: 10px;">More Detailed References</td>
+<td style="width: 10.942%; height: 10px;">Source&nbsp; Code&nbsp;</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 18px;">Analysis</td>
+<td style="width: 18.4237%; height: 18px;">Relative Strength Index Chart (RSI)</td>
+<td style="width: 43.9246%; height: 18px;">
+<p><span>RSI is a technical indicator that charts the current and historical strength or weakness of a stock based on the closing prices of a recent trading period.</span></p>
+<p><span>Values &gt;70 indicate overbought shares and &lt;30 indicates underbought shares</span></p>
+<p><span>Typically periods for RSI are set for 14 days and calculated using Simple Moving Averages SMA</span></p>
+</td>
+<td style="width: 15.6273%; height: 18px;"><a href="https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/RSI" target="_blank" rel="noopener">What Is RSI ? (Fidelity.com)</a></td>
+<td style="width: 10.942%; height: 18px;">
+<p>Adapted From:</p>
+<p><a href="https://stackoverflow.com/questions/20526414/relative-strength-index-in-python-pandas">https://stackoverflow.com/questions/20526414/relative-strength-index-in-python-pandas</a></p>
+<p></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<img src="https://www.investorsunderground.com/wp-content/uploads/2016/05/RSI_relativestrengthindex-610x436.jpg" width="610" height="436" margin="auto 0" alt="rsi" />
+<p><a href="https://www.investorsunderground.com/wp-content/uploads/2016/05/RSI_relativestrengthindex-610x436.jpg" target="_blank" rel="noopener">Image Source:InvestorsUnderground.com</a></p>
+</div>
+
+
+<div class="description-MACDChart">
+<p>&nbsp;</p>
+<table style="height: 28px; width: 95%; border-collapse: collapse;" border="1">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 10px;">Type</td>
+<td style="width: 18.4237%; height: 10px;">Title</td>
+<td style="width: 39.5614%; height: 10px;">Description</td>
+<td style="width: 19.9905%; height: 10px;">More Detailed References</td>
+<td style="width: 10.942%; height: 10px;">Source&nbsp; Code&nbsp;</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 18px;">Analysis</td>
+<td style="width: 18.4237%;">Moving Average Convergence Divergence (MACD)</td>
+<td style="width: 39.5614%; height: 18px;">
+<p>Moving average convergence divergence (MACD) is a trend-following momentum indicator that shows the relationship between two moving averages of a stock price.</p>
+<p>The MACD is typically calculated by subtracting the 26-period exponential moving average (EMA) from the 12-period EMA which is then smoothed over a 9-period EMA to generate a 'signal' line (i.e Set Periods 1,2,3 as 12,26,9 days respectively) </p>
+</td>
+<td style="width: 111.972%;"><a href="https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/macd" target="_blank" rel="noopener">What Is MACD ? (Fidelity.com)</a></td>
+<td style="width: 10.942%; height: 18px;">
+<p>-NA-</p>
+</td>    
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<img src="https://klse.i3investor.com/files/my/blog/img/bl1088_graph.jpg" width='1200vw' height='auto' margin='auto 0' alt="macd">
+<p><a href="https://klse.i3investor.com/files/my/blog/img/bl1088_graph.jpg" target="_blank">Image Source:KLSEi3Investor.com</a></p>
+</div>
+
+<div class="description-BBChart">
+<p>&nbsp;</p>
+<table style="height: 28px; width: 95%; border-collapse: collapse;" border="1">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 10px;">Type</td>
+<td style="width: 18.4237%; height: 10px;">Title</td>
+<td style="width: 39.5614%; height: 10px;">Description</td>
+<td style="width: 19.9905%; height: 10px;">More Detailed References</td>
+<td style="width: 10.942%; height: 10px;">Source&nbsp; Code&nbsp;</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 18px;">Analysis</td>
+<td style="width: 18.4237%; height: 18px;">Bollinger Bands Chart</td>
+<td style="width: 39.5614%; height: 18px;">Bollinger Bands show a 'band' around&nbsp; a simple moving average (SMA) of a stock price reflecting the standard deviations. Typical values are a smoothing period of 20days and standard deviation of 2</td>
+<td style="width: 19.9905%; height: 18px;"><a href="https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/bollinger-bands" target="_blank" rel="noopener">What Are Bollinger Bands ? (Fidelity.com)</a>&nbsp;</td>
+<td style="width: 10.942%; height: 18px;">
+<p>Adapted From:</p>
+<p><a href="https://tcoil.info/compute-bollinger-bands-for-stocks-with-python-and-pandas/">https://tcoil.info/compute-bollinger-bands-for-stocks-with-python-and-pandas/</a></p>
+<p></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<img src="https://www.tradingwithrayner.com/wp-content/uploads/2018/03/bollinger-bands-expensive-vs-cheap-1024x507.jpg" width="1200vw" height="auto" margin="auto 0" alt="rsi" />
+<p><a href="https://www.tradingwithrayner.com/wp-content/uploads/2018/03/bollinger-bands-expensive-vs-cheap-1024x507.jpg">Image Source:TradingWithRayner.com</a></p>
+</div>
+
+<div class="description-MovingAve">
+<p>&nbsp;</p>
+<table style="height: 28px; width: 95%; border-collapse: collapse;" border="1">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 10px;">Type</td>
+<td style="width: 18.4237%; height: 10px;">Title</td>
+<td style="width: 39.5614%; height: 10px;">Description</td>
+<td style="width: 19.9905%; height: 10px;">More Detailed References</td>
+<td style="width: 10.942%; height: 10px;">Source&nbsp; Code&nbsp;</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 18px;">Forecast</td>
+<td style="width: 18.4237%; height: 18px;">Moving Average Forecast (Univariate)</td>
+<td style="width: 39.5614%; height: 18px;">Forecasts either a Simple Moving Average or Exponentially Weighted Average for a selected smoothing period</td>
+<td style="width: 19.9905%; height: 18px;"><a href="https://school.stockcharts.com/doku.php?id=technical_indicators:moving_average" target="_blank" rel="noopener">SMA and EMAs (SchoolStockCharts.com)</a></td>
+<td style="width: 10.942%; height: 18px;">
+<p>Adapted From:</p>
+<p><a href="https://intellipaat.com/community/34075/numpy-version-of-exponential-weighted-moving-average-equivalent-to-pandas-ewm-mean/">Intellipaat.com</a></p>
+<p></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p><strong><span style="text-decoration: underline;">Comparison Exponential vs Simple Moving Averages</span></strong></p>
+<p>(Source : <a href="https://medium.com/@ethan_johnson03/exploring-exponential-moving-average-56a3e89530c7">https://medium.com/@ethan_johnson03/exploring-exponential-moving-average-56a3e89530c7</a>)</p>
+<p><img src="https://miro.medium.com/max/1874/1*eYa3pKH9RHYbxo2GKq33qQ.png" alt="Exploring Exponential Moving Average | by Ethan Johnson | Medium" width="621" height="137" /></p>
+<p><strong><span style="text-decoration: underline;">Comparison of EMA vs SMA for 10 Day Period</span></strong></p>
+<p>(Source: <a href="https://www.researchgate.net/figure/Comparison-of-moving-averages-The-SMA-has-more-lag-than-the-EMA_fig1_235766539">https://www.researchgate.net/figure/Comparison-of-moving-averages-The-SMA-has-more-lag-than-the-EMA_fig1_235766539</a>)&nbsp;</p>
+<p><img src="https://www.researchgate.net/profile/Pranav_Kadam/publication/235766539/figure/fig1/AS:299850601123841@1448501362316/Comparison-of-moving-averages-The-SMA-has-more-lag-than-the-EMA.png" alt="Comparison of moving averages: The SMA has more lag than the EMA.&nbsp;" width="621" height="374" /></p>
+</div>  
+  
+<br>
+
+<div class="description-ARIMAGARCH">
+<p>&nbsp;</p>
+<table style="height: 28px; width: 95%; border-collapse: collapse;" border="1">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 10px;">Type</td>
+<td style="width: 18.4237%; height: 10px;">Title</td>
+<td style="width: 47.3739%; height: 10px;">Description</td>
+<td style="width: 12.178%; height: 10px;">More Detailed References</td>
+<td style="width: 10.942%; height: 10px;">Source&nbsp; Code&nbsp;</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 18px;">Forecast</td>
+<td style="width: 18.4237%; height: 18px;">
+<p>Auto-ARIMA+GARCH Forecast</p>
+<p>(ARIMA= Auto Regressive Integrated Moving Average&nbsp;</p>
+<p>GARCH = Generalised Auto Regressive Conditional Heteroskedasticity)</p>
+</td>
+<td style="width: 47.3739%; height: 18px;">
+<p>An (S)ARIMA model is used to model the log RETURNS (which is assumed to be stationary). The inputs for SARIMA i.e the (p,d,q,P,D,Q values) are AUTOMATICALLY set via pmdarima, a Python package, that optimizes for the config with the lowest AIC (Akaike information criterion)</p>
+<p>However since the volatility of the returns are likely to be non-constant&nbsp; the GARCH(1,1) model is used improve forecasting performance</p>
+<p>Please be patient as algorithm needs ~1-2 min per stock to complete.&nbsp;</p>
+</td>
+<td style="width: 12.178%; height: 18px;"><a href="https://medium.com/analytics-vidhya/arima-garch-forecasting-with-python-7a3f797de3ff" target="_blank" rel="noopener">ARIMA GARCH Forecasting (Article from Medium.com)</a></td>
+<td style="width: 10.942%; height: 18px;">
+<p>Adapted From:</p>
+<p><a href="https://medium.com/analytics-vidhya/arima-garch-forecasting-with-python-7a3f797de3ff" target="_blank" rel="noopener">ARIMA GARCH Forecasting (Article from Medium.com)</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<img src="https://miro.medium.com/max/431/1*azEK9WckHXBx73L8bTPu6Q.png" />
+<p>The ARIMA model estimates the conditional mean (in the red box) where a subsequent GARCH model estimates the conditional variance present in the residuals of the ARIMA estimation (in the green box).</p>
+</div>
+
+<div class="description-HoltWinters">
+<p>&nbsp;</p>
+<table style="height: 28px; width: 95%; border-collapse: collapse;" border="1">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 10px;">Type</td>
+<td style="width: 18.4237%; height: 10px;">Title</td>
+<td style="width: 47.3739%; height: 10px;">Description</td>
+<td style="width: 12.178%; height: 10px;">More Detailed References</td>
+<td style="width: 10.942%; height: 10px;">Source&nbsp; Code&nbsp;</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 18px;">Forecast</td>
+<td style="width: 18.4237%; height: 18px;">
+<p>Auto Holt Winters</p>
+<p>Triple Exponential Smoothing</p>
+</td>
+<td style="width: 47.3739%; height: 18px;">
+<p>Fits a Triple Exponential Smoothing model against historical PRICES.</p>
+<p>Will 'brute-force' search all possible permutations for trend &amp; seasonality type (additive vs multiplicative vs none) for a user provided seasonal period and select the configuration with the lowest RMSE for the training data.</p>
+<p>Typically, seasonality can be set at 252 days (~1 yr worth of trading days) or 5days (1 wk)&nbsp;</p>
+<p>When selecting Start/End Date for historical training data, please note that this algorithm <em><strong>must have AT LEAST 2 seasonal periods</strong> </em>for it to work.</p>
+<p>NOTE: Please be patient as algorithm needs ~3-4 min per stock to complete it's run &nbsp;</p>
+</td>
+<td style="width: 12.178%; height: 18px;"><a href="https://grisha.org/blog/2016/01/29/triple-exponential-smoothing-forecasting/" target="_blank" rel="noopener">Holt Winters Forecasting For Dummies (https://grisha.org)</a></td>
+<td style="width: 10.942%; height: 18px;">
+<p>Adapted From:</p>
+<p><a href="https://machinelearningmastery.com/how-to-grid-search-triple-exponential-smoothing-for-time-series-forecasting-in-python/">How to Grid Search Triple Exponential Smoothing for Time Series Forecasting in Python</a></p>
+<p>(Machine Learning Mastery)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p><img src="http://kourentzes.com/forecasting/wp-content/uploads/2014/11/mseas.fig1_.png" alt="mseas.fig1" /></p>
+<p>Source : <a href="https://kourentzes.com/forecasting/2014/11/09/additive-and-multiplicative-seasonality/">https://kourentzes.com/forecasting/2014/11/09/additive-and-multiplicative-seasonality/</a>&nbsp;</p>
+</div>
+
+<div class="description-VecAR">
+<p>&nbsp;</p>
+<table style="height: 28px; width: 95%; border-collapse: collapse;" border="1">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 10px;">Type</td>
+<td style="width: 18.4237%; height: 10px;">Title</td>
+<td style="width: 86.695%; height: 10px;">Description</td>
+<td style="width: 49.8503%; height: 10px;">More Detailed References</td>
+<td style="width: 1.20192%; height: 10px;">Source&nbsp; Code&nbsp;</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 18px;">Forecast</td>
+<td style="width: 18.4237%; height: 18px;">
+<p>Vector Auto Regression Forecast (Multivariate)</p>
+</td>
+<td style="width: 86.695%; height: 18px;">
+<p>Vector Auto Regression (VAR) is a MULTIVARIATE forecasting algorithm used when two or more time series influence each other. This forecast model applies VAR over the Log Returns data for multiple stocks.</p>
+<p>Unlike ARMA/ARIMA which are UNIVARIATE and 'one-directional',bVector Auto Regression (VAR) is bi-directional where each stock returns influence each other.</p>
+<p>The algorithm automatically selects the best Lag Order reflecting the auto-regressive relationship between the various different time series based on the lowest Aikake Information Criterion score.</p>
+<p>In addition, this option also returns a number of statistical tests to confirm the validity of the forecasting model:-</p>
+<ul>
+<li><span>Granger&rsquo;s causality tests the null hypothesis that the coefficients of past values in the regression equation is zero.</span></li>
+<li><span>Johanson's Cointegration test helps to establish the presence of a statistically significant connection between two or more time series</span></li>
+<li><span>Durbin-Watson's test checks for any serial correlation of residuals (i.e if there is any leftover pattern in the residuals errors)</span></li>
+</ul>
+<p><span></span></p>
+<p>(Note - Use the Analysis &gt; Log Returns to check the ADF Statistic as Vector Auto Regression requires stationary data)</p>
+</td>
+<td style="width: 49.8503%; height: 18px;">
+<p><a href="https://www.analyticsvidhya.com/blog/2018/09/multivariate-time-series-guide-forecasting-modeling-python-codes/" target="_blank" rel="noopener">Multivariate Time Series Forecasting (AnalyticsVidhya.com)</a></p>
+<p></p>
+<p><a href="https://www.statisticshowto.com/granger-causality/" target="_blank" rel="noopener">Granger's Causality Test (StatisticsHowTo.com)</a></p>
+<p></p>
+<p><a href="https://www.statisticshowto.com/johansens-test/" target="_blank" rel="noopener">Johansen's Cointegration Test (StatisticsHowTo.com)</a></p>
+<p></p>
+<p><a href="https://www.investopedia.com/terms/d/durbin-watson-statistic.asp" target="_blank" rel="noopener">Durbin-Watson Test (Investopedia.com)</a></p>
+</td>
+<td style="width: 1.20192%; height: 18px;">
+<p>Adapted From:</p>
+<p><a href="https://www.machinelearningplus.com/time-series/vector-autoregression-examples-python" target="_blank">https://www.machinelearningplus.com/time-series/vector-autoregression-examples-python</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+</div>   
+    
+<div class="description-GBM">
+<p>&nbsp;</p>
+<table style="height: 28px; width: 95%; border-collapse: collapse;" border="1">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 10px;">Type</td>
+<td style="width: 18.4237%; height: 10px;">Title</td>
+<td style="width: 57.7286%; height: 10px;">Description</td>
+<td style="width: 16.9176%; height: 10px;">More Detailed References</td>
+<td style="width: 1.17925%; height: 10px;">Source&nbsp; Code&nbsp;</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 18px;">Forecast</td>
+<td style="width: 18.4237%; height: 18px;">
+<p>Geometric Brownian Motion (GBM) Forecast (Multivariate)</p>
+</td>
+<td style="width: 57.7286%; height: 18px;">
+<p>Geometric Brownian Motion (GBM) models stock prices as a random walk with a <span>constant drift accompanied by random shocks</span></p>
+<p><span>Assumes that the LOG RETURNS will then have a normal distribution where the mean and the variance of the LOG returns are estimated from the historical price data and assumed to be constant</span></p>
+<p><span>This function also works for MULTIVARIATE inputs as it will estimate the Covariance between Log Returns of different stocks and incorporate it into the 'random shock' component</span></p>
+</td>
+<td style="width: 16.9176%; height: 18px;"><a href="https://www.investopedia.com/articles/07/montecarlo.asp" target="_blank" rel="noopener">How To Use Monte Carlo Simulations With GBM (Investopedia.com)</a></td>
+<td style="width: 1.17925%; height: 18px;">
+<p>Adapted and modified from:</p>
+<p><a href="https://towardsdatascience.com/how-to-simulate-financial-portfolios-with-python-d0dc4b52a278">https://towardsdatascience.com/how-to-simulate-financial-portfolios-with-python-d0dc4b52a278</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p><img src="https://www.investopedia.com/thmb/hvQzcX5Ym7JM1K_EvGMJtoVEUxs=/450x225/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/CT-MonteCarlo3ra-5bfd939d4cedfd00260290de" /></p>
+</div>
+    
+<div class="description-Bootstrap">
+<p>&nbsp;</p>
+<table style="height: 28px; width: 95%; border-collapse: collapse;" border="1">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 10px;">Type</td>
+<td style="width: 18.4237%; height: 10px;">Title</td>
+<td style="width: 57.7286%; height: 10px;">Description</td>
+<td style="width: 16.9176%; height: 10px;">More Detailed References</td>
+<td style="width: 1.17925%; height: 10px;">Source&nbsp; Code&nbsp;</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 18px;">Forecast</td>
+<td style="width: 18.4237%; height: 18px;">
+<p>Bootstrap Forecast (Multivariate)</p>
+</td>
+<td style="width: 57.7286%; height: 18px;">
+<p>Similar to the GBM model, the Bootstrap Sampling forecast model assumes that future stock returns are random but can be estimated using the distribution of historical stock returns.&nbsp;</p>
+<p>However unlike the GBM model, it does not require the Log Returns to be normally distributed and instead future prices are 'back-calculated' by sampling from historical returns and translating these back into absolute price values.&nbsp;</p>
+<p><span>This function also works for MULTIVARIATE inputs as it samples 'sets' of returns from the same time slice thereby capturing correlation effects between stocks</span></p>
+</td>
+<td style="width: 16.9176%; height: 18px;"><a href="https://ideas.repec.org/a/vrs/aicuec/v64y2017i2p155-170n2.html" target="_blank" rel="noopener">Stock Price Simulation Using Bootstrap and Monte Carlo (Scientific Annals of Economics and Business June 2017)</a></td>
+<td style="width: 1.17925%; height: 18px;">
+<p>-NA-</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+</div>
+    
+<div class="description-EfficientFrontier">
+<p>&nbsp;</p>
+<table style="height: 28px; width: 95%; border-collapse: collapse;" border="1">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 10px;">Type</td>
+<td style="width: 18.4237%; height: 10px;">Title</td>
+<td style="width: 57.7286%; height: 10px;">Description</td>
+<td style="width: 16.9176%; height: 10px;">More Detailed References</td>
+<td style="width: 1.17925%; height: 10px;">Source&nbsp; Code&nbsp;</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 18px;">Forecast</td>
+<td style="width: 18.4237%; height: 18px;">
+<p>Portfolio Weights For Optimal Risk-Returns&nbsp;</p>
+</td>
+<td style="width: 57.7286%; height: 18px;">
+<p></p>
+<p>Modern Portfolio Theory assumes that there exists a set of optimal portfolios (Efficient Portfolios) that offer the highest expected return for a defined level of risk or the lowest risk for a given level of expected return</p>
+<p>Based on the outputs from either the GBM or Bootstrap Sampling method, a Monte Carlo simulation is run for a given forecast date where random combinations of stock weights are tested to plot the Std Deviation and Mean Log Returns</p>
+<p>The Sharpe Ratio and Sortino Ratio for each stock weight configuration is tested to find the "optimal" weights with the best returns (Mean) for a given risk (standard deviation)&nbsp;</p>
+<p>For meaningful results, set No Of Iterations to be at least 100+ and forecast date to be ~3+ mths beyond (historical) end date.</p>
+<p>NOTE: Please be patient as the algorithm takes time to run e.g. ~1,000 iterations takes about 3-5 minutes</p>
+</td>
+<td style="width: 16.9176%; height: 18px;">
+<p><a href="https://www.investopedia.com/terms/e/efficientfrontier.asp#:~:text=The%20efficient%20frontier%20is%20the,for%20the%20level%20of%20risk." target="_blank" rel="noopener">Efficient Frontier </a></p>
+<p><a href="https://www.investopedia.com/terms/m/meanvariance-analysis.asp" target="_blank" rel="noopener">Mean Variance Portfolio Analysis </a></p>
+<p><a href="https://www.investopedia.com/terms/s/sortinoratio.asp" target="_blank" rel="noopener">Sortino Ratio</a></p>
+<p><a href="https://www.investopedia.com/terms/s/sharperatio.asp" target="_blank" rel="noopener">Sharpe Ratio</a></p>
+<p>(Investopedia.com)</p>
+</td>
+<td style="width: 1.17925%; height: 18px;">
+<p>-NA-</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p><img src="https://4.bp.blogspot.com/--g39PHMInNk/WQLRxfZL8sI/AAAAAAAAAAk/yl-nil4ULS4SAthVNLu6GRD-QckW2YCAwCLcB/s640/03.png" /></p>
+<p>Image Source:<a href="http://datascience.uconn.edu/index.php/projects/students-work/item/61-markowitz-portfolio-construction">http://datascience.uconn.edu/index.php/projects/students-work/item/61-markowitz-portfolio-construction</a>&nbsp;</p>
+</div>
+
+<hr>
+<p></p>
+
+<p><span style="text-decoration: underline;"><strong>Troubleshooting Common Errors</strong></span></p>
+<table border="1" style="border-collapse: collapse; width: 100%; height: 438px;">
+<tbody>
+<tr style="height: 31px;">
+<td style="width: 50%; height: 31px; text-align: center;">
+<p><strong>Errors</strong></p>
+</td>
+<td style="width: 50%; height: 31px; text-align: center;"><strong>Troubleshooting Solution</strong></td>
+</tr>
+<tr style="height: 40px;">
+<td style="width: 50%; height: 40px;">
+<p>pandas_datareader._utils.RemoteDataError:</p>
+<ul>
+<li>No data fetched for symbol sdf using YahooDailyReader</li>
+</ul>
+</td>
+<td style="width: 50%; height: 40px;">
+<p>Yahoo Finance may not have the stock price details</p>
+<p>Check if the stock ticker name has been entered correctly by opening your browser and adding the relevant ticker to the end of this url <a href="https://finance.yahoo.com/quote/&lt;TICKER&gt;">https://finance.yahoo.com/quote/&lt;TICKER&gt;</a></p>
+</td>
+</tr>
+<tr style="height: 23px;">
+<td style="width: 50%; height: 23px;">
+<p><span>ValueError: </span></p>
+<ul>
+<li><span>start must be an earlier date than end&nbsp;</span></li>
+</ul>
+</td>
+<td style="width: 50%; height: 23px;">
+<p>Confirm that&nbsp;End Date is later than the Start Date</p>
+</td>
+</tr>
+<tr style="height: 141px;">
+<td style="width: 50%; height: 141px;">
+<p>ValueError:</p>
+<ul>
+<li><span>Empty data passed with indices specified</span></li>
+<li><span>Prediction must have `end` after `start`</span></li>
+<li><span>Number of samples, -&lt;Number&gt;, must be non-negative</span></li>
+<li><span>Length mismatch: Expected axis has 0 elements, new values have &lt;Number&gt; elements</span></li>
+</ul>
+</td>
+<td style="width: 50%; height: 141px;">
+<p>Confirm that&nbsp;Forecast Date is later than End Date</p>
+</td>
+</tr>
+<tr style="height: 21px;">
+<td style="width: 50%; height: 21px;">
+<p><span>ValueError: </span></p>
+<ul>
+<li><span>'label' must be of length 'x'</span></li>
+</ul>
+</td>
+<td style="width: 50%; height: 21px;">
+<p>Confirm that&nbsp;Portfolio Weights match the No of stocks analysed and Portfolio Weights sum up to 100.0</p>
+</td>
+</tr>
+<tr style="height: 21px;">
+<td style="width: 50%; height: 21px;">
+<p><span>IndexError: </span></p>
+<ul>
+<li><span>single positional indexer is out-of-bounds</span></li>
+</ul>
+</td>
+<td style="width: 50%; height: 21px;">
+<p>(Error is specific to Forecast &gt; Auto-Holt Winters)</p>
+<p>Ensure that Training Data (i.e Historical Start-End Date duration) contains AT LEAST 2 TIMES of what is specified as the Seasonality Period&nbsp;&nbsp;</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p>In addition, <span>if you encounter unusual / very poor forecast results :- consider the following :-</span></p>
+<ul>
+<li>Is the training data (i.e Start-End Duration) appropriately sized to produce a meaningful model ?</li>
+<li>Are the underlying (theoretical) assumptions for selected statistical model met (E.g. Stationarity for ARIMA-GARCH, Normality and constant mean/variance for GBM Monte Carlo , etc) ?</li>
+<li>For multivariate analysis :
+<ul>
+<li>Do all stock prices have values for the selected training data period - go to Analysis &gt; Log Returns and visualize the Adj Close prices&nbsp;</li>
+<li>Note that Moving Average, Auto-ARIMA-GARCH, Auto Holt Winters can be used on multiple stocks but these are inherently UNIVARIATE time series estimates (i.e will produce poor forecasts if the stocks price/returns movements are correlated)</li>
+</ul>
+</li>
+</ul>
+<p style="padding-left: 40px;"></p>
+
+<hr>
+<p> </p>
+<p><span style="text-decoration: underline;"><strong>About Me</strong></span></p>
+<p>I'm Z <a href="mailto:zhijingeu@yahoo.com">(zhijingeu@yahoo.com)&nbsp;</a>, an amateur Data Science enthusiast based in Asia Pac.&nbsp;</p>
+<p>Connect With Me On LinkedIn: <a href="https://www.linkedin.com/in/eu-zhijing-25a4362">https://www.linkedin.com/in/eu-zhijing-25a4362</a>&nbsp;</p>
+<p>Read Some Of My Medium Articles: <a href="https://zhijingeu.medium.com/">https://zhijingeu.medium.com/</a></p>
+<p>Visit My Github Page: <a href="">GithubPage</a></p>
+<hr>
+<p><span style="text-decoration: underline;"><strong>Feedback&nbsp;</strong></span></p>
+<p>Like this site ? Let me know !</p>
+<div id="ff-compose" style="text-align:left"></div>
+<script async defer src="https://formfacade.com/include/107149895882823471294/form/1FAIpQLSfInVcCIxMeOUuAHohfiaRgOrZ0usLJgHNKBy2ovrW3x8DuhQ/classic.js?div=ff-compose"></script>
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stock Price Simulator</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+</head>
+<body>
+
+<h1 style="text-align: center;">{{analysistype}}</h1>  
+
+<h2 style="text-align: center;">{{subheading}}</h2>
+<p>&nbsp;</p>
+<style>
+table {text-align: center;  margin-left: auto; margin-right: auto;}
+table thead th {text-align: center;  margin-left: auto;margin-right: auto;}
+</style>
+{% for table in tableOne %}
+            {{ table|safe }}
+{% endfor %}
+<p>&nbsp;</p>
+
+{% for hist in hists %}
+<img src="static/{{hist}}" alt="{{hist}}" style="margin: 10px auto 20px;display: block;max-width: 100%">
+{% endfor %}    
+    
+<p>&nbsp;</p>
+<style>
+table {text-align: center;  margin-left: auto; margin-right: auto;}
+table thead th {text-align: center;  margin-left: auto;margin-right: auto;}
+</style>
+{% for table in tableTwo %}
+            {{ table|safe }}
+{% endfor %}
+<p>&nbsp;</p>    
+
+<p>&nbsp;</p>
+<p><span style="text-decoration: underline;"><strong>GRANGER CAUSALITY TEST</strong></span></p>
+<ul>
+<li>Estimated using Sum Of Squared Residuals With Chi Square Test For Max Lag Of 1 Month (21 Trading Days)'</li>
+<li>Rows are the Response _y and columns are the predictor series _x so values refers to the p-value of log returns stock A_x causing log returns stock B_y</li>
+<li>If the p-value obtained from the test is lesser than the significance level of 0.05, then, you can safely reject the null hypothesis that that the coefficients of past values in the regression equation is zero</li>
+</ul>
+<style>
+table {text-align: center;  margin-left: auto; margin-right: auto;}
+table thead th {text-align: center;  margin-left: auto;margin-right: auto;}
+</style>
+{% for table in tableThree %}
+            {{ table|safe }}
+{% endfor %}
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+<p><span style="text-decoration: underline;"><strong>JOHANSON COINTEGRATION TEST </strong></span></p>
+<p>Estimated assuming no deterministic part for the order of time polynomial</p>
+<ul>
+<li>Establishes the presence of a statistically significant connection between two or more time series.</li>
+<li>If Test Stat &gt; Critical Value (TRUE) then we accept that there is a significant connection</li>
+</ul>
+<style>
+table {text-align: center;  margin-left: auto; margin-right: auto;}
+table thead th {text-align: center;  margin-left: auto;margin-right: auto;}
+</style>
+{% for table in tableFour %}
+            {{ table|safe }}
+{% endfor %}
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+<p><span style="text-decoration: underline;"><strong>DURBIN WATSON TEST</strong></span></p>
+<ul>
+<li>Checks the serial correlation of the residuals errors if there is some pattern in the time series not explained by the Vector AutoRegression model</li>
+<li>Statistic ranges between 0 to 4. The closer to 2, then no significant serial correlation.The closer to 0, there is a positive serial correlation, closer to 4 implies negative serial correlation.</li>
+</ul>
+<style>
+table {text-align: center;  margin-left: auto; margin-right: auto;}
+table thead th {text-align: center;  margin-left: auto;margin-right: auto;}
+</style>
+{% for table in tableFive %}
+            {{ table|safe }}
+{% endfor %}
+<p>&nbsp;</p>
+  
+<p>&nbsp;</p>
+<style>
+table {text-align: center;  margin-left: auto; margin-right: auto;}
+table thead th {text-align: center;  margin-left: auto;margin-right: auto;}
+</style>
+{% for table in tableSix %}
+            {{ table|safe }}
+{% endfor %}
+<p>&nbsp;</p>
+    
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stock Price Simulator</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+</head>
+<body>
+
+<h1 style="text-align: center;">{{analysistype}}</h1>  
+
+<h2 style="text-align: center;">{{subheading}}</h2>
+<p>&nbsp;</p>
+<style>
+table {text-align: center;  margin-left: auto; margin-right: auto;}
+table thead th {text-align: center;  margin-left: auto;margin-right: auto;}
+</style>
+{% for table in tableOne %}
+            {{ table|safe }}
+{% endfor %}
+<p>&nbsp;</p>
+
+{% for hist in hists %}
+<img src="static/{{hist}}" alt="{{hist}}" style="margin: 10px auto 20px;display: block;max-width: 100%">
+{% endfor %}    
+    
+<p>&nbsp;</p>
+<style>
+table {text-align: center;  margin-left: auto; margin-right: auto;}
+table thead th {text-align: center;  margin-left: auto;margin-right: auto;}
+</style>
+{% for table in tableTwo %}
+            {{ table|safe }}
+{% endfor %}
+<p>&nbsp;</p>    
+
+<p>&nbsp;</p>
+<style>
+table {text-align: center;  margin-left: auto; margin-right: auto;}
+table thead th {text-align: center;  margin-left: auto;margin-right: auto;}
+</style>
+{% for table in tableThree %}
+            {{ table|safe }}
+{% endfor %}
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+<style>
+table {text-align: center;  margin-left: auto; margin-right: auto;}
+table thead th {text-align: center;  margin-left: auto;margin-right: auto;}
+</style>
+{% for table in tableFour %}
+            {{ table|safe }}
+{% endfor %}
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+<style>
+table {text-align: center;  margin-left: auto; margin-right: auto;}
+table thead th {text-align: center;  margin-left: auto;margin-right: auto;}
+</style>
+{% for table in tableFive %}
+            {{ table|safe }}
+{% endfor %}
+<p>&nbsp;</p>
+  
+<p>&nbsp;</p>
+<style>
+table {text-align: center;  margin-left: auto; margin-right: auto;}
+table thead th {text-align: center;  margin-left: auto;margin-right: auto;}
+</style>
+{% for table in tableSix %}
+            {{ table|safe }}
+{% endfor %}
+<p>&nbsp;</p>
+    
+</body>
+
+</html>

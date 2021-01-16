@@ -12,7 +12,7 @@
 
 	$(document).ready(function () {
 	    $('.form-div0').show();
-	    $('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.form-div7,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();
+	    $('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.form-div7,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontierHist,.description-EfficientFrontier').hide();
 $("#mainSelection").change(function() {
  if ($(this).val() == "GBM") {
 $('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-Bootstrap,.description-EfficientFrontier').hide();    
@@ -57,6 +57,10 @@ $('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.form
 else if ($(this).val() == "MACDChart") {
 $('.noOfStdDev,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.averageType,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();     
 $('.tickers,.startend,.windowSize1,.windowSize2,.windowSize3,.form-div7,.description-MACDChart').show();
+  }
+else if ($(this).val() == "EfficientFrontierHist") {
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3, .noOfStdDev,.weights,.backtestdays,.percentilerange,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.forecastdate,.simMethod').hide();    
+$('.tickers,.portfoliovalue,.startend,.noOfIter,.riskfreerate,.form-div7,.description-EfficientFrontierHist').show();
   }
 else if ($(this).val() == "EfficientFrontier") {
 $('.averagetype,.windowSize1, .windowSize2,.windowSize3, .noOfStdDev,.weights,.backtestdays,.percentilerange,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap').hide();    
@@ -137,7 +141,8 @@ I want to run a/an </label><select name="mainSelection" id="mainSelection">
 <option value="VecAR">...Forecast > Vector Auto Regression Forecast (Multivariate)</option>    
 <option value="GBM">...Forecast > Geometric Brownian Motion (GBM) Forecast (Multivariate)</option>
 <option value="Bootstrap">...Forecast > Bootstrap Sampling Forecast (Multivariate)</option>
-<option value="EfficientFrontier">...Forecast > Portfolio Weights For Optimal Risk-Returns</option>
+<option value="EfficientFrontierHist">...Forecast > Portfolio Weights For Optimal Risk-Returns Using HISTORICAL Returns</option>
+<option value="EfficientFrontier">...Forecast > Portfolio Weights For Optimal Risk-Returns Using FORECAST FUTURE Returns</option>
 </select>
 </div>
 
@@ -630,7 +635,7 @@ I want to run a/an </label><select name="mainSelection" id="mainSelection">
 <p></p>
 </div>
     
-<div class="description-EfficientFrontier">
+<div class="description-EfficientFrontierHist">
 <p>&nbsp;</p>
 <table style="height: 28px; width: 95%; border-collapse: collapse;" border="1">
 <tbody>
@@ -644,14 +649,13 @@ I want to run a/an </label><select name="mainSelection" id="mainSelection">
 <tr style="height: 18px;">
 <td style="width: 7.43638%; height: 18px;">Forecast</td>
 <td style="width: 18.4237%; height: 18px;">
-<p>Portfolio Weights For Optimal Risk-Returns&nbsp;</p>
+<p>Portfolio Weights For Optimal Risk-Returns USING HISTORICAL RETURNS</p>
 </td>
 <td style="width: 57.7286%; height: 18px;">
-<p></p>
+<p>&nbsp;</p>
 <p>Modern Portfolio Theory assumes that there exists a set of optimal portfolios (Efficient Portfolios) that offer the highest expected return for a defined level of risk or the lowest risk for a given level of expected return</p>
-<p>Based on the outputs from either the GBM or Bootstrap Sampling method, a Monte Carlo simulation is run for a given forecast date where random combinations of stock weights are tested to plot the Std Deviation and Mean Log Returns</p>
+<p>This takes HISTORICAL returns data for a given start-end date and extracts the Std Deviation and Mean Log Returns for random combinations of stock weights using Monte Carlo Simulation and and plots them against each other.</p>
 <p>The Sharpe Ratio and Sortino Ratio for each stock weight configuration is tested to find the "optimal" weights with the best returns (Mean) for a given risk (standard deviation)&nbsp;</p>
-<p>For meaningful results, set No Of Iterations to be at least 100+ and forecast date to be ~3+ mths beyond (historical) end date.</p>
 <p>NOTE: Please be patient as the algorithm takes time to run e.g. ~1,000 iterations takes about 3-5 minutes</p>
 </td>
 <td style="width: 16.9176%; height: 18px;">
@@ -667,11 +671,52 @@ I want to run a/an </label><select name="mainSelection" id="mainSelection">
 </tr>
 </tbody>
 </table>
-<p></p>
+<p>&nbsp;</p>
 <p><img src="https://4.bp.blogspot.com/--g39PHMInNk/WQLRxfZL8sI/AAAAAAAAAAk/yl-nil4ULS4SAthVNLu6GRD-QckW2YCAwCLcB/s640/03.png" /></p>
 <p>Image Source:<a href="http://datascience.uconn.edu/index.php/projects/students-work/item/61-markowitz-portfolio-construction">http://datascience.uconn.edu/index.php/projects/students-work/item/61-markowitz-portfolio-construction</a>&nbsp;</p>
 </div>
 
+<div class="description-EfficientFrontier">
+<p>&nbsp;</p>
+<table style="height: 28px; width: 95%; border-collapse: collapse;" border="1">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 10px;">Type</td>
+<td style="width: 18.4237%; height: 10px;">Title</td>
+<td style="width: 57.7286%; height: 10px;">Description</td>
+<td style="width: 16.9176%; height: 10px;">More Detailed References</td>
+<td style="width: 1.17925%; height: 10px;">Source&nbsp; Code&nbsp;</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 7.43638%; height: 18px;">Forecast</td>
+<td style="width: 18.4237%; height: 18px;">
+<p>Portfolio Weights For Optimal Risk-Returns Using FUTURE FORECAST RETURNS</p>
+</td>
+<td style="width: 57.7286%; height: 18px;">
+<p>&nbsp;</p>
+<p>Similar to previous option that used HISTORICAL RETURNS with ONE KEY DIFFERENCE.</p>
+<p>Instead of HISTORICAL prices, the algorithm forecasts FUTURE returns using GBM or Bootstrap Sampling method for random combinations of stock weights are tested to plot the Std Deviation and Mean Log Returns using the same Monte Carlo Simulation.</p>
+<p>The Sharpe Ratio and Sortino Ratio for each stock weight configuration is tested to find the "optimal" weights with the best returns (Mean) for a given risk (standard deviation)&nbsp;</p>
+<p>NOTE: Please be patient as the algorithm takes time to run e.g. ~1,000 iterations takes about 3-5 minutes</p>
+</td>
+<td style="width: 16.9176%; height: 18px;">
+<p><a href="https://www.investopedia.com/terms/e/efficientfrontier.asp#:~:text=The%20efficient%20frontier%20is%20the,for%20the%20level%20of%20risk." target="_blank" rel="noopener">Efficient Frontier </a></p>
+<p><a href="https://www.investopedia.com/terms/m/meanvariance-analysis.asp" target="_blank" rel="noopener">Mean Variance Portfolio Analysis </a></p>
+<p><a href="https://www.investopedia.com/terms/s/sortinoratio.asp" target="_blank" rel="noopener">Sortino Ratio</a></p>
+<p><a href="https://www.investopedia.com/terms/s/sharperatio.asp" target="_blank" rel="noopener">Sharpe Ratio</a></p>
+<p>(Investopedia.com)</p>
+</td>
+<td style="width: 1.17925%; height: 18px;">
+<p>-NA-</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p><img src="https://4.bp.blogspot.com/--g39PHMInNk/WQLRxfZL8sI/AAAAAAAAAAk/yl-nil4ULS4SAthVNLu6GRD-QckW2YCAwCLcB/s640/03.png" /></p>
+<p>Image Source:<a href="http://datascience.uconn.edu/index.php/projects/students-work/item/61-markowitz-portfolio-construction">http://datascience.uconn.edu/index.php/projects/students-work/item/61-markowitz-portfolio-construction</a>&nbsp;</p>
+</div>
+    
 <hr>
 <p></p>
 

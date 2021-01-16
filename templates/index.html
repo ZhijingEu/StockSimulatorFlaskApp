@@ -15,60 +15,60 @@
 	    $('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.form-div7,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontierHist,.description-EfficientFrontier').hide();
 $("#mainSelection").change(function() {
  if ($(this).val() == "GBM") {
-$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
 $('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.form-div7,.description-GBM').show();
   }
 else if ($(this).val() == "Bootstrap") {
-$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-EfficientFrontier').hide();    
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
 $('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.form-div7,.description-Bootstrap').show();
-  } 
+  }
 else if ($(this).val() == "VecAR") {
-$('.noOfIter,.percentilerange,.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.noOfIter,.percentilerange,.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
 $('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.form-div7,.description-VecAR').show();
   }
 else if ($(this).val() == "HoltWinters") {
-$('.noOfIter,.percentilerange,.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.noOfIter,.percentilerange,.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
 $('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.seasonality,.form-div7,.description-HoltWinters').show();
-  }     
+  }
 else if ($(this).val() == "candlestickChart") {
-$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
 $('.tickers,.startend,.form-div7,.description-candlestickChart').show();
   }
 else if ($(this).val() == "returnsDist") {
-$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
 $('.tickers,.weights,.portfoliovalue,.startend,.form-div7,.description-returnsDist').show();
   }
 else if ($(this).val() == "RSIChart") {
-$('.windowSize2,.windowSize3,.noOfStdDev,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.windowSize2,.windowSize3,.noOfStdDev,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
 $('.tickers,.startend,.windowSize1,.averagetype,.form-div7,.description-RSIChart').show();
   }
 else if ($(this).val() == "BBChart") {
-$('.windowSize2,.windowSize3,.averagetype,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.windowSize2,.windowSize3,.averagetype,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
 $('.tickers,.startend,.windowSize1,.noOfStdDev,.form-div7,.description-BBChart').show();
   }
 else if ($(this).val() == "MovingAve") {
-$('.windowSize2,.windowSize3,.noOfStdDev,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.windowSize2,.windowSize3,.noOfStdDev,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();
 $('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.averagetype,.windowSize1,.form-div7,.description-MovingAve').show();
   }
 else if ($(this).val() == "ARIMAGARCH") {
-$('.windowSize2,.windowSize3,.noOfStdDev,.noOfIter,.percentilerange,.averagetype,.windowSize1,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();    
+$('.windowSize2,.windowSize3,.noOfStdDev,.noOfIter,.percentilerange,.averagetype,.windowSize1,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
 $('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.form-div7,.description-ARIMAGARCH').show();
   }
 else if ($(this).val() == "MACDChart") {
-$('.noOfStdDev,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.averageType,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();     
+$('.noOfStdDev,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.averageType,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
 $('.tickers,.startend,.windowSize1,.windowSize2,.windowSize3,.form-div7,.description-MACDChart').show();
   }
 else if ($(this).val() == "EfficientFrontierHist") {
-$('.averagetype,.windowSize1, .windowSize2,.windowSize3, .noOfStdDev,.weights,.backtestdays,.percentilerange,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.forecastdate,.simMethod').hide();    
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3, .noOfStdDev,.weights,.backtestdays,.percentilerange,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.forecastdate,.simMethod').hide();
 $('.tickers,.portfoliovalue,.startend,.noOfIter,.riskfreerate,.form-div7,.description-EfficientFrontierHist').show();
   }
 else if ($(this).val() == "EfficientFrontier") {
-$('.averagetype,.windowSize1, .windowSize2,.windowSize3, .noOfStdDev,.weights,.backtestdays,.percentilerange,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap').hide();    
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3, .noOfStdDev,.weights,.backtestdays,.percentilerange,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontierHist').hide();
 $('.tickers,.portfoliovalue,.startend,.forecastdate,.noOfIter,.riskfreerate,.simMethod,.form-div7,.description-EfficientFrontier').show();
   }
 });
 $("#mainSelection").trigger("change");
-           
+
 	});
 
 var StartDate = document.getElementById('StartDate');

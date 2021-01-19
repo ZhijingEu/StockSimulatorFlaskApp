@@ -1290,6 +1290,7 @@ def EfficientPortfolioHistorical(start_date,end_date,symbols,portfolioValue,NoOf
     for i, text in enumerate(txt):
         ax.annotate(text, (z[i], y[i]))
     
+    plt.title("Mean vs Std Dev Of Log Returns For "+str(NoOfIterationsMC)+" Different Portfolio Weights")
     plt.savefig(f'static/{targetfolder}/{imagecounter}_efficientportfolio.png')
     print(SharpeDetail)
     print(SortinoDetail)
@@ -1300,8 +1301,10 @@ def EfficientPortfolioHistorical(start_date,end_date,symbols,portfolioValue,NoOf
     
     return FinalResultsTable, SharpeDetail, SortinoDetail
 
-def EfficientPortfolio(start_date,end_date,symbols,portfolioValue,T,N,NoOfIterationsMC,AnnualRiskFreeRate,SimMethod,imagecounter,targetfolder):
+def EfficientPortfolioFuture(start_date,end_date,symbols,portfolioValue,T,N,NoOfIterationsMC,NoOfIterationsInnerLoop,AnnualRiskFreeRate,SimMethod,imagecounter,targetfolder):
     
+    symbolsWPortfolio=symbols+["Portfolio"]
+
     RiskFreeRate=(1+AnnualRiskFreeRate)**(1/252)-1
     #Effective rate for period = (1 + annual rate)**(1 / # of periods) – 1
     
@@ -1338,57 +1341,73 @@ def EfficientPortfolio(start_date,end_date,symbols,portfolioValue,T,N,NoOfIterat
         sigma=np.array(df_mean_stdev["StdDev Log Daily Return"].values.tolist())
         
         if SimMethod=="GBM":
-            if len(symbols)==1:
-                stocks, time = GBMsimulatorUniVar(S0, mu, sigma, T, N)
-                prediction=pd.DataFrame(stocks)
-                prediction=prediction.T
-                prediction.columns=dfprices.columns
 
-            else:
+            forecastresults=pd.DataFrame()
+            percentiles=pd.DataFrame()
+            
+            for x in range(1,int(NoOfIterationsInnerLoop)):      
+                
                 Cov=create_covar(dfreturns)
                 stocks, time = GBMsimulatorMultiVar(S0, mu, sigma, Cov, T, N)
                 prediction=pd.DataFrame(stocks)
                 prediction=prediction.T
                 prediction.columns=dfprices.columns
+                forecastresults=pd.concat([forecastresults,prediction], axis=1, sort=False)
+    
+            for y in range(0,len(symbolsWPortfolio)):
+                percentiles["P50_"+symbolsWPortfolio[y]]=forecastresults.filter(regex=symbolsWPortfolio[y]).quantile(0.5,1) 
      
-            IterationReturn,Iteration_Mean_Stdev=calc_returns(prediction,symbols)
+            IterationReturn,Iteration_Mean_Stdev=calc_returns(percentiles,symbols)
             IterationStdDev=Iteration_Mean_Stdev.tail(1).values[0][2]
             IterationMean=Iteration_Mean_Stdev.tail(1).values[0][1]
+            IterationMeanComponentStocks=Iteration_Mean_Stdev.T.loc["Mean Log Daily Return"][:-1].values.tolist()
+            IterationStdDevComponentStocks=Iteration_Mean_Stdev.T.loc["StdDev Log Daily Return"][:-1].values.tolist()
             
             negativereturnsonly=pd.DataFrame(IterationReturn.iloc[:,len(IterationReturn.columns)-1])
-            negativereturnsonly=negativereturnsonly[negativereturnsonly['Log Daily Returns Adj Close Portfolio']<0]
-            IterationNegativeReturnsStdDev=negativereturnsonly['Log Daily Returns Adj Close Portfolio'].std()
-        
+            negativereturnsonly=negativereturnsonly[negativereturnsonly[negativereturnsonly.columns[0]]<0]            
+            IterationNegativeReturnsStdDev=negativereturnsonly[negativereturnsonly.columns[0]].std()
+                        
         elif SimMethod=="Bootstrap":
             
-            prediction=bootstrapforecast(dfreturns,T)
-            IterationStdDev=prediction.iloc[:,0].std()
-            IterationMean=prediction.iloc[:,0].mean()
-            negativereturnsonly=prediction[prediction['Log Daily Returns Adj Close Portfolio']<0].iloc[:,0]
-            IterationNegativeReturnsStdDev=negativereturnsonly.std()
-        
+            forecastresults=pd.DataFrame()
+            returnspercentiles=pd.DataFrame()
+            
+            for x in range(1,int(NoOfIterationsInnerLoop)):  
+            
+                prediction=bootstrapforecast(dfreturns,T)
+                prediction=prediction.add_prefix('Iter_'+str(x)+'_')
+                forecastresults=pd.concat([forecastresults,prediction], axis=1, sort=False)
+                    
+            for y in range(0,len(symbolsWPortfolio)):
+                returnspercentiles["P50_"+symbolsWPortfolio[y]]=forecastresults.filter(regex=symbolsWPortfolio[y]).quantile(0.5,1)
+            
+            IterationMeanComponentStocks=[]
+            IterationStdDevComponentStocks=[]
+            
+            for y in range(0,int(len(returnspercentiles.columns)-1)):
+                IterationMeanComponentStocks.append(returnspercentiles[returnspercentiles.columns[y]].mean())
+                IterationStdDevComponentStocks.append(returnspercentiles[returnspercentiles.columns[y]].std())
+            
+            IterationStdDev=returnspercentiles[returnspercentiles.columns[-1]].std()
+            IterationMean=returnspercentiles[returnspercentiles.columns[-1]].mean()
+            
+            negativereturnsonly=returnspercentiles[returnspercentiles[returnspercentiles.columns[-1]]<0]          
+            IterationNegativeReturnsStdDev=negativereturnsonly[negativereturnsonly.columns[0]].std()
+            
         # Note to go from LOG returns to Simple returns , I used simple returns =exp(log returns)−1 
         IterationSharpeRatio=round(((np.exp(IterationMean)-1)-RiskFreeRate)/(np.exp(IterationStdDev)-1),3)
         
         IterationSortinoRatio=round(((np.exp(IterationMean)-1)-RiskFreeRate)/(np.exp(IterationNegativeReturnsStdDev)-1),3)
         
-        X=[portfolioWeightsRandom,IterationStdDev,IterationMean,IterationSharpeRatio,IterationSortinoRatio]
+        X=[portfolioWeightsRandom,IterationStdDev,IterationMean,IterationSharpeRatio,IterationSortinoRatio,\
+           IterationStdDevComponentStocks,IterationMeanComponentStocks]
         
         ResultsTable.append(X)
         
         dfprices_inner.drop('Adj Close Portfolio',inplace=True, axis=1)
     
-    FinalResultsTable=pd.DataFrame(ResultsTable,columns=["Weights","Std Dev","Mean","Sharpe Ratio","Sortino Ratio"])
-    
-    historical_dfreturns ,historical_df_mean_stdev=calc_returns(dfprices,symbols)
-    
-    historical_df_mean_stdev=historical_df_mean_stdev[['Stock','StdDev Log Daily Return','Mean Log Daily Return']]
-    historical_df_mean_stdev.columns=['Stock','Std Dev','Mean']
-    
-    fig, ax = plt.subplots(figsize=(10, 5))
-    
-    FinalResultsTable.plot.scatter(x="Std Dev",y='Mean',ax=ax)
-    historical_df_mean_stdev.plot.scatter(x="Std Dev",y='Mean',c='r',marker='x',ax=ax)
+    FinalResultsTable=pd.DataFrame(ResultsTable,columns=["Weights","Std Dev","Mean",\
+                                                         "Sharpe Ratio","Sortino Ratio","Components Log Returns Std Dev","Components Log Returns Mean"])
 
     SharpeStdDev=FinalResultsTable.nlargest(1,['Sharpe Ratio'])['Std Dev'].values[0]
     SharpeMean=FinalResultsTable.nlargest(1,['Sharpe Ratio'])['Mean'].values[0]
@@ -1398,7 +1417,7 @@ def EfficientPortfolio(start_date,end_date,symbols,portfolioValue,T,N,NoOfIterat
         Sharpeweightstring.append([symbols[i]+":",Sharperoundedweights[i]])
     SharpeLabel="Optimal Sharpe Ratio"
     SharpeDetail='Optimal Sharpe Ratio: '+str(FinalResultsTable.nlargest(1,['Sharpe Ratio'])['Sharpe Ratio'].values[0])+" with Weights "+str(Sharpeweightstring)
-
+    
     SortinoStdDev=FinalResultsTable.nlargest(1,['Sortino Ratio'])['Std Dev'].values[0]
     SortinoMean=FinalResultsTable.nlargest(1,['Sortino Ratio'])['Mean'].values[0]
     Sortinoroundedweights=[round(num, 4) for num in FinalResultsTable.nlargest(1,['Sortino Ratio'])['Weights'].values[0]]
@@ -1407,24 +1426,35 @@ def EfficientPortfolio(start_date,end_date,symbols,portfolioValue,T,N,NoOfIterat
         Sortinoweightstring.append([symbols[i]+":",Sortinoroundedweights[i]])
     SortinoLabel='Optimal Sortino Ratio'
     SortinoDetail='Optimal Sortino Ratio: '+str(FinalResultsTable.nlargest(1,['Sortino Ratio'])['Sortino Ratio'].values[0])+" with Weights "+str(Sortinoweightstring)
-    
+       
     SharpeSortino=pd.DataFrame(zip([SharpeStdDev,SortinoStdDev],[SharpeMean,SortinoMean]),index=['Optimal Sharpe','Optimal Sortino'],columns=['Std Dev','Mean'])
-    SharpeSortino.plot.scatter(x="Std Dev",y='Mean',c='g',marker='x',ax=ax)
+  
+    SharpeRatio_Best=pd.DataFrame(FinalResultsTable.nlargest(1,['Sharpe Ratio'])["Components Log Returns Mean"].values[0],index=symbols,columns=["Mean Log Daily Return"])
+    SharpeRatio_Best["StdDev Log Daily Return"]=FinalResultsTable.nlargest(1,['Sharpe Ratio'])["Components Log Returns Std Dev"].values[0]
+    SharpeRatio_Best
     
-    txt=list(historical_df_mean_stdev['Stock'])+[SharpeLabel,SortinoLabel]
-    z=list(historical_df_mean_stdev['Std Dev'])+[SharpeStdDev,SortinoStdDev]
-    y=list(historical_df_mean_stdev['Mean'])+[SharpeMean,SortinoMean]
+    fig, ax = plt.subplots(figsize=(10, 5))
+    
+    SharpeSortino.plot.scatter(x="Std Dev",y='Mean',c='g',marker='x',ax=ax)
+  
+    FinalResultsTable.plot.scatter(x="Std Dev",y='Mean',ax=ax)
+    SharpeRatio_Best.plot.scatter(x="StdDev Log Daily Return",y='Mean Log Daily Return',c='r',marker='x',ax=ax)
+
+    txt=list(SharpeRatio_Best.index)+[SharpeLabel,SortinoLabel]
+    z=list(SharpeRatio_Best['StdDev Log Daily Return'])+[SharpeStdDev,SortinoStdDev]
+    y=list(SharpeRatio_Best['Mean Log Daily Return'])+[SharpeMean,SortinoMean]
 
     for i, text in enumerate(txt):
         ax.annotate(text, (z[i], y[i]))
-    
+
+    plt.title("Mean vs Std Dev Of P50 Log Returns For "+str(NoOfIterationsMC)+" Different Portfolio Weights Simulated Using "+SimMethod+" over "+str(NoOfIterationsInnerLoop)+" Iters")
     plt.savefig(f'static/{targetfolder}/{imagecounter}_efficientportfolio.png')
     print(SharpeDetail)
     print(SortinoDetail)
     
     FinalResultsTable['Log Returns Std Dev']=FinalResultsTable['Std Dev']
     FinalResultsTable['Log Returns Mean']=FinalResultsTable['Mean']
-    FinalResultsTable=FinalResultsTable[['Weights','Log Returns Std Dev','Log Returns Mean','Sharpe Ratio','Sortino Ratio']]
+    FinalResultsTable=FinalResultsTable[['Weights','Log Returns Std Dev','Log Returns Mean','Sharpe Ratio','Sortino Ratio',"Components Log Returns Std Dev","Components Log Returns Mean"]]
     
     return FinalResultsTable, SharpeDetail, SortinoDetail
 
@@ -1998,7 +2028,16 @@ def results():
         N=T+1
                 
         FinalResultsTable,SharpeDetail,SortinoDetail=EfficientPortfolioHistorical(StartDate,EndDate,symbols,portfolioValue,NoOfIter,riskfreerate,imagecounter,"efficientportfolio")
-       
+        
+        HistSharpeWeights=FinalResultsTable.nlargest(1,['Sharpe Ratio'])['Weights'].tolist()
+
+        HistSharpe_dfprices, HistSharpe_noOfShares, HistSharpe_share_split_table = extract_prices(StartDate,EndDate,symbols,HistSharpeWeights[0],portfolioValue)
+
+        HistSharpe_dfreturns ,HistSharpe_df_mean_stdev=calc_returns(HistSharpe_dfprices,symbols)
+
+        HistSharpe_df_mean_stdev["Mean Daily Return"]=np.exp(HistSharpe_df_mean_stdev["Mean Log Daily Return"])-1
+        HistSharpe_df_mean_stdev["StdDev Daily Return"]=np.exp(HistSharpe_df_mean_stdev["StdDev Log Daily Return"])-1
+        
         tableTwo=FinalResultsTable.nlargest(1,['Sharpe Ratio'])
         SharpeWeights=FinalResultsTable.nlargest(1,['Sharpe Ratio'])['Weights'].tolist()
         print(SharpeWeights[0])
@@ -2023,6 +2062,8 @@ def results():
         ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
         plt.title("Optimal Portfolio Weights Based On Sortino Ratio")
         plt.savefig(f'static/efficientportfolio/{imagecounter}_01SortinoPortfolioweights.png')
+        
+        tableFour=HistSharpe_df_mean_stdev
         
         hists = os.listdir('static/efficientportfolio')
         hists = ['efficientportfolio/' + file for file in hists]
@@ -2036,8 +2077,8 @@ def results():
                                BacktestDays=BacktestDays,NoOfIter=NoOfIter,PercentileRange=PercentileRange,\
                                averageType=averageType,WindowSize1=WindowSize1,WindowSize2=WindowSize2,WindowSize3=WindowSize3,riskfreerate=riskfreerate,simMethod=simMethod,\
                               tableTwo=[tableTwo.to_html(classes='data', header="true")],\
-                              tableThree=[tableThree.to_html(classes='data', header="true")])      
-    
+                              tableThree=[tableThree.to_html(classes='data', header="true")],\
+                              tableFour=[tableFour.to_html(classes='data', header="true")])    
     
     
     elif mainSelection=="EfficientFrontier":
@@ -2046,11 +2087,29 @@ def results():
         
         T=np.busday_count(EndDate,ForecastDate)+0
         N=T+1
+        
+        NoOfIterationsInnerLoop=10 #Fixed to 10 to avoid time out error as algol is very time consuming
                 
-        FinalResultsTable,SharpeDetail,SortinoDetail=EfficientPortfolio(StartDate,EndDate,symbols,portfolioValue,T,N,NoOfIter,riskfreerate,simMethod,imagecounter,"efficientportfolio")
-       
-        tableTwo=FinalResultsTable.nlargest(1,['Sharpe Ratio'])
-        SharpeWeights=FinalResultsTable.nlargest(1,['Sharpe Ratio'])['Weights'].tolist()
+        FutureFinalResultsTable,FutureSharpeDetail,FutureSortinoDetail =EfficientPortfolioFuture(StartDate,EndDate,symbols,\
+                                                                                                 portfolioValue,T,N,NoOfIter,\
+                                                                                                 NoOfIterationsInnerLoop,\
+                                                                                                 riskfreerate,simMethod,\
+                                                                                                 imagecounter,\
+                                                                                                 "efficientportfolio")
+        
+        FutureSharpeRatio_Best=pd.DataFrame(FutureFinalResultsTable.nlargest(1,['Sharpe Ratio'])["Components Log Returns Mean"].values[0],index=symbols,columns=["Mean Log Daily Return"])
+        FutureSharpeRatio_Best["StdDev Log Daily Return"]=FutureFinalResultsTable.nlargest(1,['Sharpe Ratio'])["Components Log Returns Std Dev"].values[0]
+        SharpeRatioFutureMEAN=FutureFinalResultsTable.nlargest(1,['Sharpe Ratio'])["Log Returns Mean"].values[0]
+        SharpeRatioFutureSTDEV=FutureFinalResultsTable.nlargest(1,['Sharpe Ratio'])["Log Returns Std Dev"].values[0]
+
+        FutureSharpeRatio_Best=FutureSharpeRatio_Best.append(pd.DataFrame([[SharpeRatioFutureMEAN,SharpeRatioFutureSTDEV]],index=["Portfolio"],columns=FutureSharpeRatio_Best.columns))
+
+        FutureSharpeRatio_Best["Mean Daily Return"]=np.exp(FutureSharpeRatio_Best["Mean Log Daily Return"])-1
+        FutureSharpeRatio_Best["StdDev Daily Return"]=np.exp(FutureSharpeRatio_Best["StdDev Log Daily Return"])-1
+
+        
+        tableTwo=FutureFinalResultsTable.nlargest(1,['Sharpe Ratio'])
+        SharpeWeights=FutureFinalResultsTable.nlargest(1,['Sharpe Ratio'])['Weights'].tolist()
         print(SharpeWeights[0])
       
         labels = symbols
@@ -2062,8 +2121,8 @@ def results():
         plt.title("Optimal Portfolio Weights Based On Sharpe Ratio")
         plt.savefig(f'static/efficientportfolio/{imagecounter}_01SharpePortfolioweights.png')
             
-        tableThree=FinalResultsTable.nlargest(1,['Sortino Ratio'])
-        SortinoWeights=FinalResultsTable.nlargest(1,['Sortino Ratio'])['Weights'].tolist()
+        tableThree=FutureFinalResultsTable.nlargest(1,['Sortino Ratio'])
+        SortinoWeights=FutureFinalResultsTable.nlargest(1,['Sortino Ratio'])['Weights'].tolist()
         print(SortinoWeights[0])
         
         sizes = SortinoWeights[0]
@@ -2074,19 +2133,22 @@ def results():
         plt.title("Optimal Portfolio Weights Based On Sortino Ratio")
         plt.savefig(f'static/efficientportfolio/{imagecounter}_01SortinoPortfolioweights.png')
         
+        tableFour=FutureSharpeRatio_Best
+        
         hists = os.listdir('static/efficientportfolio')
         hists = ['efficientportfolio/' + file for file in hists]
         
         analysistype="Efficient Portfolio Weights Via Mean-Variance Analysis" 
         subheading="For Forecast Period Of "+str(N)+" Days From "+EndDate+" Till "+ForecastDate+" Via "+simMethod+" Simulation Over "+str(NoOfIter)+" Iterations"
         
-        return render_template('results.html',SharpeDetail=SharpeDetail,SortinoDetail=SortinoDetail,subheading=subheading,analysistype=analysistype, hists = hists, mainSelection=mainSelection,\
+        return render_template('results.html',SharpeDetail=FutureSharpeDetail,SortinoDetail=FutureSortinoDetail,subheading=subheading,analysistype=analysistype, hists = hists, mainSelection=mainSelection,\
                                tickerPortfolio=tickerPortfolio,portfolioWeights=portfolioWeights,\
                                portfolioValue=portfolioValue,StartDate=StartDate,EndDate=EndDate,ForecastDate=ForecastDate,\
                                BacktestDays=BacktestDays,NoOfIter=NoOfIter,PercentileRange=PercentileRange,\
                                averageType=averageType,WindowSize1=WindowSize1,WindowSize2=WindowSize2,WindowSize3=WindowSize3,riskfreerate=riskfreerate,simMethod=simMethod,\
                               tableTwo=[tableTwo.to_html(classes='data', header="true")],\
-                              tableThree=[tableThree.to_html(classes='data', header="true")])
+                              tableThree=[tableThree.to_html(classes='data', header="true")],\
+                              tableFour=[tableFour.to_html(classes='data', header="true")])  
             
 if __name__ == '__main__':
-    app.run(debug=True, use_reloader=True, port=5000)
+    app.run(debug=True, use_reloader=False, port=5000)

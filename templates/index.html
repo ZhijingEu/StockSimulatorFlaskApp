@@ -695,7 +695,8 @@ I want to run a/an </label><select name="mainSelection" id="mainSelection">
 <td style="width: 57.7286%; height: 18px;">
 <p>&nbsp;</p>
 <p>Similar to previous option that used HISTORICAL RETURNS with ONE KEY DIFFERENCE.</p>
-<p>Instead of HISTORICAL prices, the algorithm forecasts FUTURE returns using GBM or Bootstrap Sampling method for random combinations of stock weights are tested to plot the Std Deviation and Mean Log Returns using the same Monte Carlo Simulation.</p>
+<p>Instead of HISTORICAL prices, the algorithm forecasts the P50 FUTURE returns using GBM or Bootstrap Sampling method for random combinations of stock weights are tested to plot the Std Deviation and Mean Log Returns using the same Monte Carlo Simulation.</p>
+<p>Note the no of iterations for the GBM or Bootstrap to estimate the P50 returns is FIXED to 10 iters to avoid time out - use the IPYNB version of the code if you want to experiment further</p>
 <p>The Sharpe Ratio and Sortino Ratio for each stock weight configuration is tested to find the "optimal" weights with the best returns (Mean) for a given risk (standard deviation)&nbsp;</p>
 <p>NOTE: Please be patient as the algorithm takes time to run e.g. ~1,000 iterations takes about 3-5 minutes</p>
 </td>

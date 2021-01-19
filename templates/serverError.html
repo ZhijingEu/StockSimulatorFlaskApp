@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Whoops</title>
+
+<style>
+.loading {
+    width: 35px;
+    height: 35px;
+    display: none;
+    background: url(/static/loadingimage.gif) no-repeat;
+    cursor: wait;
+    }    
+</style>
+    
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+</head>
+<body>
+    
+<h1 style="text-align: center;">Internal Server Error</h1>
+<p><img src="https://sadmoneyblog.com/wp-content/uploads/2020/07/Untitled-1.jpg" alt="Sad Stonks Man" width="621" height="350" /></p>
+<p><a href="https://sadmoneyblog.com/wp-content/uploads/2020/07/Untitled-1.jpg" target="_blank" rel="noopener">Image Source:https://sadmoneyblog.com/</a></p>
+<p>&nbsp;</p>
+<hr>
+<h2>Sorry :( </h2>
+<h2>There's been an error of some sort...</h2>
+
+<p><span style="text-decoration: underline;"><strong>Troubleshooting Common Errors</strong></span></p>
+<table border="1" style="border-collapse: collapse; width: 100%; height: 438px;">
+<tbody>
+<tr style="height: 31px;">
+<td style="width: 50%; height: 31px; text-align: center;">
+<p><strong>Errors</strong></p>
+</td>
+<td style="width: 50%; height: 31px; text-align: center;"><strong>Troubleshooting Solution</strong></td>
+</tr>
+<tr style="height: 40px;">
+<td style="width: 50%; height: 40px;">
+<p>pandas_datareader._utils.RemoteDataError:</p>
+<ul>
+<li>No data fetched for symbol sdf using YahooDailyReader</li>
+</ul>
+</td>
+<td style="width: 50%; height: 40px;">
+<p>Yahoo Finance may not have the stock price details</p>
+<p>Check if the stock ticker name has been entered correctly by opening your browser and adding the relevant ticker to the end of this url <a href="https://finance.yahoo.com/quote/&lt;TICKER&gt;">https://finance.yahoo.com/quote/&lt;TICKER&gt;</a></p>
+</td>
+</tr>
+<tr style="height: 23px;">
+<td style="width: 50%; height: 23px;">
+<p><span>ValueError: </span></p>
+<ul>
+<li><span>start must be an earlier date than end&nbsp;</span></li>
+</ul>
+</td>
+<td style="width: 50%; height: 23px;">
+<p>Confirm that&nbsp;End Date is later than the Start Date</p>
+</td>
+</tr>
+<tr style="height: 141px;">
+<td style="width: 50%; height: 141px;">
+<p>ValueError:</p>
+<ul>
+<li><span>Empty data passed with indices specified</span></li>
+<li><span>Prediction must have `end` after `start`</span></li>
+<li><span>Number of samples, -&lt;Number&gt;, must be non-negative</span></li>
+<li><span>Length mismatch: Expected axis has 0 elements, new values have &lt;Number&gt; elements</span></li>
+</ul>
+</td>
+<td style="width: 50%; height: 141px;">
+<p>Confirm that&nbsp;Forecast Date is later than End Date</p>
+</td>
+</tr>
+<tr style="height: 21px;">
+<td style="width: 50%; height: 21px;">
+<p><span>ValueError: </span></p>
+<ul>
+<li><span>'label' must be of length 'x'</span></li>
+</ul>
+</td>
+<td style="width: 50%; height: 21px;">
+<p>Confirm that&nbsp;Portfolio Weights match the No of stocks analysed and Portfolio Weights sum up to 100.0</p>
+</td>
+</tr>
+<tr style="height: 21px;">
+<td style="width: 50%; height: 21px;">
+<p><span>IndexError: </span></p>
+<ul>
+<li><span>single positional indexer is out-of-bounds</span></li>
+</ul>
+</td>
+<td style="width: 50%; height: 21px;">
+<p>(Error is specific to Forecast &gt; Auto-Holt Winters)</p>
+<p>Ensure that Training Data (i.e Historical Start-End Date duration) contains AT LEAST 2 TIMES of what is specified as the Seasonality Period&nbsp;&nbsp;</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p>In addition, <span>if you encounter unusual / very poor forecast results :- consider the following :-</span></p>
+<ul>
+<li>Is the training data (i.e Start-End Duration) appropriately sized to produce a meaningful model ?</li>
+<li>Are the underlying (theoretical) assumptions for selected statistical model met (E.g. Stationarity for ARIMA-GARCH, Normality and constant mean/variance for GBM Monte Carlo , etc) ?</li>
+<li>For multivariate analysis :
+<ul>
+<li>Do all stock prices have values for the selected training data period - go to Analysis &gt; Log Returns and visualize the Adj Close prices&nbsp;</li>
+<li>Note that Moving Average, Auto-ARIMA-GARCH, Auto Holt Winters can be used on multiple stocks but these are inherently UNIVARIATE time series estimates (i.e will produce poor forecasts if the stocks price/returns movements are correlated)</li>
+</ul>
+</li>
+</ul>
+<p style="padding-left: 40px;"></p>
+
+</body>
+
+</html>

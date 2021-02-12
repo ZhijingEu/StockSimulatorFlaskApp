@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stock Price Simulator</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+</head>
+<body>
+
+<h1 style="text-align: center;">Factor Analysis</h1>  
+<br>
+<h2 style="text-align: center;">{{errorMessage}}</h2>    
+<h2 style="text-align: center;">Normalisation Configuration</h2>
+<p>&nbsp;</p>
+<p style="text-align: center;">Normalisation Method: {{NormMethod}}</p>
+<style>
+table {text-align: center;  margin-left: auto; margin-right: auto;}
+table thead th {text-align: center;  margin-left: auto;margin-right: auto;}
+</style>
+{% for table in tableOne %}
+            {{ table|safe }}
+{% endfor %}
+<p>&nbsp;</p>
+
+<h2 style="text-align: center;">Raw Un-Normalised Factors By Stock Counter</h2>
+<p>&nbsp;</p>
+<style>
+table {text-align: center;  margin-left: auto; margin-right: auto;}
+table thead th {text-align: center;  margin-left: auto;margin-right: auto;}
+</style>
+{% for table in tableTwo %}
+            {{ table|safe }}
+{% endfor %}
+<p>&nbsp;</p>    
+    
+<p style="text-align: center;">Note that {{missingCount}} Stocks Have Missing Data In At Least 1 Factor And Therefore Not Included In Scoring/Ranking Table</p>
+
+<h2 style="text-align: center;">Ranked & Scored Stock Counters</h2>    
+<p style="text-align: center;"> NB Figures below reflect the normalised factors </p>
+<p>&nbsp;</p>
+<style>
+table {text-align: center;  margin-left: auto; margin-right: auto;}
+table thead th {text-align: center;  margin-left: auto;margin-right: auto;}
+</style>
+{% for table in tableThree %}
+            {{ table|safe }}
+{% endfor %}
+<p style="text-align: center;">{{quartileMessage}}</p>
+<p>&nbsp;</p>  
+    
+<h3 style="text-align: center;">Cronbach Alpha Score For Factors = {{cronbachalpha}}</h3>     
+
+<p style="text-align: center;">Cronbach’s alpha is a convenient test used to estimate the reliability, or internal consistency, of a composite score</p>
+<p style="text-align: center;">A negative number indicates that something is wrong with your data—perhaps you forgot to reverse score some items.</p> 
+<p style="text-align: center;">The general rule of thumb is that a Cronbach’s alpha of .70 and above is good, .80 and above is better, and .90 and above is best</p>
+       
+{% for hist in hists %}
+<img src="static/{{hist}}" alt="{{hist}}" style="margin: 10px auto 20px;display: block;max-width: 100%">
+{% endfor %}    
+    
+<h2 style="text-align: center;">Correlation Of Normalized Factors vs Current (y.o.y) Annual Share Return</h2>    
+<p style="text-align: center;"> NB Figures below reflect the normalised factors </p>
+<p>&nbsp;</p>
+<style>
+table {text-align: center;  margin-left: auto; margin-right: auto;}
+table thead th {text-align: center;  margin-left: auto;margin-right: auto;}
+</style>
+{% for table in tableFour %}
+            {{ table|safe }}
+{% endfor %}
+<p>&nbsp;</p>
+
+<br>
+    
+<h2 style="text-align: center;">Median Stock Returns By Ranked Quartiles</h2>    
+<p>&nbsp;</p>
+<style>
+table {text-align: center;  margin-left: auto; margin-right: auto;}
+table thead th {text-align: center;  margin-left: auto;margin-right: auto;}
+</style>
+{% for table in tableFive %}
+            {{ table|safe }}
+{% endfor %}
+<p>&nbsp;</p>
+
+<br>
+
+<p style="text-align: center;">List Of Top Quartile Stocks : {{ topQuartileListing|safe  }} </p>
+ 
+</body>
+
+</html>

@@ -10,7 +10,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib import cm
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from scipy.stats import norm 
 from scipy.stats import shapiro
@@ -25,6 +25,10 @@ from statsmodels.graphics.tsaplots import plot_acf
 
 import pmdarima
 import arch
+
+import time
+from scipy.stats import zscore
+import os
 
 #Based loosely on https://towardsdatascience.com/how-to-simulate-financial-portfolios-with-python-d0dc4b52a278
 
@@ -1645,6 +1649,296 @@ def vectorAutoRegression(start_date,end_date,symbols,portfolioWeights,portfolioV
     
     return stockprices,RMSE_DF,DWTable,GrangersMatrix,JohansonCointTable
 
+#FACTOR ANALYSIS
+
+#function to extract statistics for each stock
+def get_key_stats(tgt_website):
+ 
+    # The web page is make up of several html table. By calling read_html function.
+    # all the tables are retrieved in dataframe format.
+    # Next is to append all the table and transpose it to give a nice one row data.
+    df_list = pd.read_html(tgt_website)
+    df_statistics = df_list[0]
+ 
+    for df in df_list[1:]:
+        df_statistics = df_statistics.append(df)
+ 
+    # Transpose the result to make all data in single row
+    return df_statistics.set_index(0).T
+
+#function to find the last recent weekday for a given date e.g. Fri if Sat or Sun 
+
+def lastBusDay(enterdate):
+    if enterdate.weekday()==6:
+        lastBusDay = datetime(year=enterdate.year, month=enterdate.month, day=enterdate.day-2)
+    elif enterdate.weekday()==5:
+        lastBusDay = datetime(year=enterdate.year, month=enterdate.month, day=enterdate.day-1)
+    else:
+        lastBusDay = enterdate
+    return lastBusDay
+
+#See example https://finance.yahoo.com/quote/C52.SI/key-statistics?p=C52.SI
+#This function extracts the relevant statistic and converts the unit into Millions and turns it into a float
+
+def extract_statistic(df_statistics,metric,symbol):
+    x=0
+    if metric=="Market Cap (intraday) 5" or metric=="Enterprise Value 3" or metric=="Trailing P/E" or metric=="Forward P/E 1" or metric=="PEG Ratio (5 yr expected) 1" or metric=="Price/Sales (ttm)" or metric=="Price/Book (mrq)" or metric=="Enterprise Value/Revenue 3" or metric=="Enterprise Value/EBITDA 6":
+      if metric=="Market Cap (intraday) 5":
+        x=0
+      elif metric=="Enterprise Value 3":
+        x=1
+      elif metric=="Trailing P/E" :
+        x=2
+      elif metric=="Forward P/E 1":
+        x=3
+      elif metric=="PEG Ratio (5 yr expected) 1":
+        x=4 
+      elif metric=="Price/Sales (ttm)":
+        x=5
+      elif metric=="Price/Book (mrq)":
+        x=6 
+      elif metric=="Enterprise Value/Revenue 3":
+        x=7 
+      elif metric=="Enterprise Value/EBITDA 6":
+        x=8
+      try:
+        String=df_statistics.get(symbol).iloc[-2:-1,x][0]
+      except:
+        String=''
+      Metric=''
+      try:
+          if 'T' in String:
+              Metric=float(df_statistics.get(symbol).iloc[-2:-1,x][0].replace("T",""))*1e6
+          elif 'B' in String:
+              Metric=float(df_statistics.get(symbol).iloc[-2:-1,x][0].replace("B",""))*1e3
+          elif 'M' in String:
+              Metric=float(df_statistics.get(symbol).iloc[-2:-1,x][0].replace("M",""))
+          elif '%' in String:
+              Metric=float(df_statistics.get(symbol).iloc[-2:-1,x][0].replace("%",""))
+          else :
+              Metric=float(df_statistics.get(symbol).iloc[-2:-1,x][0])
+      except:
+          if String==np.nan:
+            Metric=np.nan
+
+    else:
+      try:
+        String=df_statistics.get(symbol).loc[1][metric]
+      except:
+          String=''
+      Metric=''
+      try:
+          if 'T' in String:
+              Metric=float(df_statistics.get(symbol).loc[1][metric].replace("T",""))*1e6
+          elif 'B' in String:
+              Metric=float(df_statistics.get(symbol).loc[1][metric].replace("B",""))*1e3
+          elif 'M' in String:
+              Metric=float(df_statistics.get(symbol).loc[1][metric].replace("M",""))
+          elif '%' in String:
+              Metric=float(df_statistics.get(symbol).loc[1][metric].replace("%",""))
+          else :
+              Metric=float(df_statistics.get(symbol).loc[1][metric])
+      except:
+          if String==np.nan:
+              Metric=np.nan
+    #print(symbol,":",metric,":",Metric)
+    return metric,Metric
+
+#Cronbach’s alpha is a convenient test used to estimate the reliability, or internal consistency, of a composite score
+#Based on https://mathtuition88.com/2019/09/13/calculate-cronbach-alpha-using-python/
+
+def CronbachAlpha(itemscores):
+    itemscores = np.asarray(itemscores)
+    itemvars = itemscores.var(axis=0, ddof=1)
+    tscores = itemscores.sum(axis=1)
+    nitems = itemscores.shape[1]
+
+    return (nitems / (nitems-1)) * (1 - (itemvars.sum() / tscores.var(ddof=1)))
+
+#based on https://stackoverflow.com/questions/8595973/truncate-to-three-decimals-in-python
+#used later for geometric mean to avoid overflow error when exponentiating large figures
+def trun_n_d(n,d):
+    return int(n*10**d)/10**d
+
+#This function normalises the factors and converts them into a single composite score that is then ranked 
+
+def getStockReturns(symbols,current,currentMinus1Yr):
+    prices_current=[]
+    prices_lastyear=[]
+    prices_return=[]
+
+    for symbol in symbols:
+        try:
+            price_current=round(data.DataReader(symbol, start=lastBusDay(current), end=lastBusDay(current), data_source='yahoo')['Adj Close'][-1],4)
+            price_lastyear=round(data.DataReader(symbol, start=lastBusDay(currentMinus1Yr), end=lastBusDay(currentMinus1Yr), data_source='yahoo')['Adj Close'][-1],4)
+            price_return=round((price_current/price_lastyear-1)*100,1)
+            print("Extracted Prices For ",symbol)
+            time.sleep(random.randint(1,2))
+
+        except:
+            price_current=np.nan
+            price_lastyear=np.nan
+            price_return=np.nan
+            print("Unable To Extract Prices For ",symbol)
+
+        prices_current.append(price_current)
+        prices_lastyear.append(price_lastyear)
+        prices_return.append(price_return)
+
+    stockprice_df=pd.DataFrame(zip(prices_current,prices_lastyear,prices_return),\
+                                   columns=["Adj Close "+lastBusDay(current).strftime('%Y-%m-%d'),\
+                                            "Adj Close "+lastBusDay(currentMinus1Yr).strftime('%Y-%m-%d'),"Stock Price Returns"],index=symbols)
+    
+    return stockprice_df
+
+def rankstocks(symbols,df_statistics,listOfMetrics,select_order_by_metric,weights_by_metric,NormMethod,stockprice_df):
+    
+    raw_df=pd.DataFrame()
+    for symbol in symbols:
+        title=[]
+        value=[]
+        for item in listOfMetrics:
+            itemtitle,itemvalue=extract_statistic(df_statistics,item,symbol)
+            title.append(itemtitle)
+            value.append(itemvalue)
+        raw_df=raw_df.append(pd.DataFrame(value).T)
+    raw_df.index=symbols
+    raw_df.columns=listOfMetrics
+    raw_df.replace('', np.nan, inplace=True)
+ 
+    summary_df=pd.DataFrame()
+    for symbol in symbols:
+        title=[]
+        value=[]
+        for item in listOfMetrics:
+            itemtitle,itemvalue=extract_statistic(df_statistics,item,symbol)
+            title.append(itemtitle)
+            value.append(itemvalue)
+        summary_df=summary_df.append(pd.DataFrame(value).T)
+    summary_df.index=symbols
+    summary_df.columns=listOfMetrics
+    summary_df.replace('', np.nan, inplace=True)
+    summary_df.dropna(inplace=True)
+    summary_df.replace(0.00,0.0001,inplace=True)
+    summary_df=summary_df.convert_dtypes()
+    
+    summary_method=pd.DataFrame(zip(listOfMetrics,select_order_by_metric,weights_by_metric),columns=["Factor","Select Highest vs Lowest","Weightage"])
+
+    
+    if len(summary_df)<=1:
+        
+        return summary_method,raw_df,pd.DataFrame(),pd.DataFrame(),0.0,0.0 # calculation aborted due to insufficient stocks to compare
+
+    elif len(summary_df)>1:    
+
+        ranking_df=summary_df
+
+        if NormMethod=="Z-Score Normalization + Additive Composite":
+            for i in range(0,len(summary_df.columns)):
+                if select_order_by_metric[i]=='Lowest':
+                    ranking_df[summary_df.columns[i]]=1/ranking_df[summary_df.columns[i]]
+                    ranking_df[summary_df.columns[i]]=ranking_df[[summary_df.columns[i]]].apply(zscore)
+                elif select_order_by_metric[i]=='Highest':
+                    ranking_df[summary_df.columns[i]]=summary_df[[summary_df.columns[i]]].apply(zscore)
+            ranking_df['Composite Score']=ranking_df.dot(weights_by_metric)
+
+        elif NormMethod=="MinMax Normalization + Additive Composite":
+            for i in range(0,len(summary_df.columns)):
+                xmin=ranking_df[summary_df.columns[i]].min()
+                xmax=ranking_df[summary_df.columns[i]].max()
+                maxminrange=xmax-xmin
+                if select_order_by_metric[i]=='Lowest':
+                    ranking_df[summary_df.columns[i]]=(xmax-ranking_df[summary_df.columns[i]])/maxminrange
+                elif select_order_by_metric[i]=='Highest':
+                    ranking_df[summary_df.columns[i]]=(ranking_df[summary_df.columns[i]]-xmin)/maxminrange
+            ranking_df['Composite Score']=ranking_df.dot(weights_by_metric)
+
+        elif NormMethod=="Percentile Normalization + Additive Composite":
+            for i in range(0,len(summary_df.columns)):
+                sz = ranking_df[summary_df.columns[i]].size-1
+                if select_order_by_metric[i]=='Lowest':
+                    ranking_df[summary_df.columns[i]] = 100-ranking_df[summary_df.columns[i]].rank(method='max').apply(lambda x: 100.0*(x-1)/sz)
+                elif select_order_by_metric[i]=='Highest':
+                    ranking_df[summary_df.columns[i]] = ranking_df[summary_df.columns[i]].rank(method='max').apply(lambda x: 100.0*(x-1)/sz)
+            ranking_df['Composite Score']=ranking_df.dot(weights_by_metric)
+                    
+        elif NormMethod=="MinMax Normalization + Multiplicative Composite":
+            #must normalize using min-max as Z scores will create zero and negative figures
+            for i in range(0,len(summary_df.columns)):
+                xmin=ranking_df[summary_df.columns[i]].min()
+                xmax=ranking_df[summary_df.columns[i]].max()
+                maxminrange=xmax-xmin
+                if select_order_by_metric[i]=='Lowest':
+                    ranking_df[summary_df.columns[i]]=(xmax-ranking_df[summary_df.columns[i]])/maxminrange
+                elif select_order_by_metric[i]=='Highest':
+                    ranking_df[summary_df.columns[i]]=(ranking_df[summary_df.columns[i]]-xmin)/maxminrange
+
+            ranking_df=ranking_df.add(0.000001) # adding small value to all fields to avoid zero values
+
+            WGMa=0
+            WGMarray=[]
+            for stock in ranking_df.index:
+                for i in range(0,len(listOfMetrics)):
+                    WGMa=WGMa+ranking_df.loc[stock][i]**weights_by_metric[i] 
+                    #WGMa=WGMa+trun_n_d(ranking_df.loc[stock][i],5)**trun_n_d(weights_by_metric[i],5)
+                    # Note : trun_n_d is a truncation function to 5 decimal points to avoid overflow error during expotentiation
+                WGMb=WGMa**(1/sum(weights_by_metric))
+                WGMarray.append(WGMb)
+
+            ranking_df['Composite Score']=WGMarray        
+        
+        ranking_df['Rank By Composite Score']=ranking_df['Composite Score'].rank(ascending=False)
+        ranking_df=ranking_df.sort_values(by=['Rank By Composite Score'])
+
+        cronbachalpha=CronbachAlpha(ranking_df[ranking_df.columns[0:len(listOfMetrics)]])
+
+        value=[]
+        for symbol in ranking_df.index:
+            itemtitle,itemvalue=extract_statistic(df_statistics,'Market Cap (intraday) 5',symbol)
+            value.append(itemvalue)
+
+        ranking_df['Market Cap (intraday) 5']=value
+
+        ranking_df=pd.merge(ranking_df,stockprice_df,left_index=True,right_index=True,how='left')    
+                        
+        x=ranking_df['Composite Score'].values
+        y=ranking_df['Stock Price Returns'].values
+        correlcoeff=np.corrcoef(x,y)[0][1]
+        
+        #https://pbpython.com/pandas-qcut-cut.html
+        ranking_df_w_quartiles=ranking_df
+        ranking_df_w_quartiles['Quartiles By Composite Score'] = pd.qcut(ranking_df['Composite Score'], q=4, labels=['Bottom Quartile','3rd Quartile','2nd Quartile','Top Quartile'],precision=0)
+        ranking_df_w_quartiles=ranking_df_w_quartiles[['Quartiles By Composite Score','Stock Price Returns']].groupby(['Quartiles By Composite Score']).median()
+        
+        
+        value=[]
+        for symbol in raw_df.index:
+            itemtitle,itemvalue=extract_statistic(df_statistics,'Market Cap (intraday) 5',symbol)
+            value.append(itemvalue)
+
+        raw_df['Market Cap (intraday) 5']=value
+        raw_df.replace('', np.nan, inplace=True)
+        
+        return summary_method,raw_df,ranking_df,ranking_df_w_quartiles,cronbachalpha,correlcoeff
+    
+    
+#function to plot in a grid the correlation between each factor and the Stock Returns
+def correlation(ranking_df,listOfMetrics, n_rows, n_cols,imagecounter):
+    jet= plt.get_cmap('jet')
+    colors = iter(jet(np.linspace(0,1,10)))
+    fig = plt.figure(figsize=(5,15))
+    #fig = plt.figure(figsize=(14,9))
+    for i, var in enumerate(listOfMetrics):
+        ax = fig.add_subplot(n_rows,n_cols,i+1)
+        asset = ranking_df.loc[:,var]
+        ax.scatter(ranking_df['Stock Price Returns'], asset, color = next(colors))
+        ax.set_xlabel('Stock Price Returns')
+        ax.set_ylabel("{}".format(var))
+        ax.set_title(var +" vs Stock Price Returns")
+    fig.tight_layout()
+    plt.savefig(f'static/factoranalysis/{imagecounter}_02_CorrelByFactor.png')
+    #plt.show()
+    
 from flask import Flask, render_template, url_for, request, session
 import os
 
@@ -1660,6 +1954,9 @@ def results():
     imagecounter = str(random.randint(10000,99999))
     mainSelection=request.form['mainSelection']
     tickerPortfolio=request.form['tickerPortfolio']
+    tickerPortfolio=tickerPortfolio.replace(" ","") 
+    tickerPortfolio=tickerPortfolio.replace("'","")       
+    
     portfolioWeights=request.form['portfolioWeights']
     portfolioValue=request.form.get('portfolioValue',type=float)
     StartDate = request.form['StartDate'] 
@@ -2149,6 +2446,152 @@ def results():
                               tableTwo=[tableTwo.to_html(classes='data', header="true")],\
                               tableThree=[tableThree.to_html(classes='data', header="true")],\
                               tableFour=[tableFour.to_html(classes='data', header="true")])  
+    
+    elif mainSelection=="factorAnalysis":
+        clear_cache('factoranalysis')
+        symbols=tickerPortfolio.split(",")
+        #https://stackoverflow.com/questions/53344797/how-create-an-array-with-checkboxes-in-flask
+        data = request.form.to_dict(flat=False)
+        chosen=data.get('chosen[]')
+        hiOrLo=data.get('hiOrLo[]')
+        hiOrLo=list(filter(lambda a: a != 'NA', hiOrLo))
+        factorweight=data.get('factorweight[]')
+        factorweight=list(filter(lambda a: a != '0.00' and a != '0.0' and a!='0', factorweight))
+        factorweight = [float(i)/100 for i in factorweight] 
+        print(symbols)
+        print(chosen)    
+        print(hiOrLo)
+        print(factorweight)
+        checkArrayLengths=[len(chosen),len(hiOrLo),len(factorweight)]
+        series = pd.Series(checkArrayLengths)
+
+        errorMessage=""
+        if sum(factorweight)!=1 or series.nunique() > 1:
+            if sum(factorweight)!=1:
+                errorMessage='ERROR ! : Factor Weights Do Not Sum'
+                NormMethod=""
+                quartileMessage=""
+                cronbachalpha=""
+                correlcoeff=""
+                missingCount=""
+                topQuartileListing=list(["NA"])
+                tableOne=pd.DataFrame()
+                tableTwo=pd.DataFrame()
+                tableThree=pd.DataFrame()
+                tableFour=pd.DataFrame()
+                tableFive=pd.DataFrame()
+                hists = os.listdir('static/factoranalysis')
+                hists = ['factoranalysis/' + file for file in hists]
+
+                return render_template('results_factoranalysis.html',errorMessage=errorMessage,hists=hists,cronbachalpha=cronbachalpha,\
+                                  correlcoeff = correlcoeff,missingCount=missingCount,\
+                                  NormMethod=NormMethod,quartileMessage=quartileMessage,\
+                                  topQuartileListing=topQuartileListing,\
+                                  tableOne=[tableOne.to_html(classes='data', header="true")],\
+                                  tableTwo=[tableTwo.to_html(classes='data', header="true")],\
+                                  tableThree=[tableThree.to_html(classes='data', header="true")],\
+                                  tableFour=[tableFour.to_html(classes='data', header="true")],\
+                                  tableFive=[tableFive.to_html(classes='data', header="true")])
+
+
+            if series.nunique() > 1:
+                errorMessage='Error ! : Array Lengths Mismatched - check if No of Factors selected, Hi/Lo and Weights are consistent'
+                NormMethod=""
+                quartileMessage=""
+                cronbachalpha=""
+                correlcoeff=""
+                missingCount=""
+                topQuartileListing=list(["NA"])
+                tableOne=pd.DataFrame()
+                tableTwo=pd.DataFrame()
+                tableThree=pd.DataFrame()
+                tableFour=pd.DataFrame()
+                tableFive=pd.DataFrame()
+                hists = os.listdir('static/factoranalysis')
+                hists = ['factoranalysis/' + file for file in hists]
+
+                return render_template('results_factoranalysis.html',errorMessage=errorMessage,hists=hists,cronbachalpha=cronbachalpha,\
+                                  correlcoeff = correlcoeff,missingCount=missingCount,\
+                                  NormMethod=NormMethod,quartileMessage=quartileMessage,\
+                                  topQuartileListing=topQuartileListing,\
+                                  tableOne=[tableOne.to_html(classes='data', header="true")],\
+                                  tableTwo=[tableTwo.to_html(classes='data', header="true")],\
+                                  tableThree=[tableThree.to_html(classes='data', header="true")],\
+                                  tableFour=[tableFour.to_html(classes='data', header="true")],\
+                                  tableFive=[tableFive.to_html(classes='data', header="true")])
+
+        else:
+
+            df_statistics = {}
+
+            for symbol in symbols:
+                try:
+                    df_statistics[symbol] = get_key_stats(r'https://finance.yahoo.com/quote/' + symbol + '/key-statistics?p=' + symbol)
+                    print('Extracted Stats For '+symbol)
+                    time.sleep(random.randint(1,2))
+
+                except:
+                    print("Unable To Extract Statistics For ",symbol)    
+
+            current = datetime.now() - timedelta(1) #current date set a day before as data may not be avail for today
+
+            currentMinus1Yr=datetime(year=current.year-1, month=current.month, day=current.day)
+
+            stockprice_df=getStockReturns(symbols,current,currentMinus1Yr)
+
+            #display(stockprice_df)
+
+            listOfMetrics=chosen
+            select_order_by_metric=hiOrLo
+            weights_by_metric=factorweight
+            NormMethod=request.form['NormMethod']
+
+            summary_method,raw_df,ranking_df,ranking_df_w_quartiles,cronbachalpha,correlcoeff=rankstocks(symbols,df_statistics,listOfMetrics,\
+                                                                                          select_order_by_metric,\
+                                                                                          weights_by_metric,\
+                                                                                          NormMethod,\
+                                                                                          stockprice_df)
+
+            correlation(ranking_df,listOfMetrics, len(listOfMetrics),1,imagecounter)
+
+            countNA=ranking_df.shape[0] - ranking_df.dropna().shape[0]
+            if countNA!=0:
+                quartileMessage="Note: There are "+str(countNA)+" stocks out of the total "+str(len(ranking_df))+" scored stocks without Stock Price info which were ignored in the aggregation"
+            elif countNA==0:
+                quartileMessage=""
+
+
+
+
+            ranking_df_w_quartiles.plot.bar(figsize=(15,5))
+            plt.title("Median Current Annual y.o.y Stock Price Returns By Quartile")
+            plt.savefig(f'static/factoranalysis/{imagecounter}_01_Quartiles.png')    
+
+            ranking_df.plot.scatter(x='Composite Score',y='Stock Price Returns',c='DarkBlue',figsize=(10,5))
+            plt.title("Correlation Between Composite Score vs Current Annual y.o.y Stock Price Returns:"+str(round(correlcoeff,3)))
+            plt.savefig(f'static/factoranalysis/{imagecounter}_03_CorrelOverall.png')
+
+            tableOne=summary_method
+            tableTwo=raw_df
+            tableThree=ranking_df
+            tableFour=pd.DataFrame(ranking_df.corr()['Stock Price Returns'].loc[listOfMetrics])
+            tableFive=ranking_df_w_quartiles
+            topQuartileListing=list(ranking_df.index[0:int(len(ranking_df.index)/4)])
+            missingCount=len(raw_df)-len(ranking_df)
+            hists = os.listdir('static/factoranalysis')
+            hists = ['factoranalysis/' + file for file in hists]
+
+            #return jsonify(data)
+
+            return render_template('results_factoranalysis.html',errorMessage=errorMessage,hists=hists,cronbachalpha=round(cronbachalpha,3),\
+                                      correlcoeff = round(correlcoeff,3),missingCount=missingCount,\
+                                      NormMethod=NormMethod,quartileMessage=quartileMessage,\
+                                      topQuartileListing=topQuartileListing,\
+                                      tableOne=[tableOne.to_html(classes='data', header="true")],\
+                                      tableTwo=[tableTwo.to_html(classes='data', header="true")],\
+                                      tableThree=[tableThree.to_html(classes='data', header="true")],\
+                                      tableFour=[tableFour.to_html(classes='data', header="true")],\
+                                      tableFive=[tableFive.to_html(classes='data', header="true")])    
             
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=False, port=5000)

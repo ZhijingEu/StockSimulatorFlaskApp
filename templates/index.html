@@ -12,58 +12,62 @@
 
 	$(document).ready(function () {
 	    $('.form-div0').show();
-	    $('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.form-div7,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontierHist,.description-EfficientFrontier').hide();
+	    $('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.form-div7,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontierHist,.description-EfficientFrontier,.description-factorAnalysis,.factorAnalysis').hide();
 $("#mainSelection").change(function() {
  if ($(this).val() == "GBM") {
-$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist,.description-factorAnalysis,.factorAnalysis').hide();
 $('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.form-div7,.description-GBM').show();
   }
 else if ($(this).val() == "Bootstrap") {
-$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-EfficientFrontier,.description-EfficientFrontierHist,.description-factorAnalysis,.factorAnalysis').hide();
 $('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.form-div7,.description-Bootstrap').show();
   }
 else if ($(this).val() == "VecAR") {
 $('.noOfIter,.percentilerange,.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
-$('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.form-div7,.description-VecAR').show();
+$('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.form-div7,.description-VecAR,.description-factorAnalysis,.factorAnalysis').show();
   }
 else if ($(this).val() == "HoltWinters") {
 $('.noOfIter,.percentilerange,.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
-$('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.seasonality,.form-div7,.description-HoltWinters').show();
+$('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.seasonality,.form-div7,.description-HoltWinters,.description-factorAnalysis,.factorAnalysis').show();
   }
 else if ($(this).val() == "candlestickChart") {
-$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist,.description-factorAnalysis,.factorAnalysis').hide();
 $('.tickers,.startend,.form-div7,.description-candlestickChart').show();
   }
 else if ($(this).val() == "returnsDist") {
-$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3,.noOfStdDev,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist,.description-factorAnalysis,.factorAnalysis').hide();
 $('.tickers,.weights,.portfoliovalue,.startend,.form-div7,.description-returnsDist').show();
   }
 else if ($(this).val() == "RSIChart") {
-$('.windowSize2,.windowSize3,.noOfStdDev,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
+$('.windowSize2,.windowSize3,.noOfStdDev,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist,.description-factorAnalysis,.factorAnalysis').hide();
 $('.tickers,.startend,.windowSize1,.averagetype,.form-div7,.description-RSIChart').show();
   }
 else if ($(this).val() == "BBChart") {
-$('.windowSize2,.windowSize3,.averagetype,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
+$('.windowSize2,.windowSize3,.averagetype,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist,.description-factorAnalysis,.factorAnalysis').hide();
 $('.tickers,.startend,.windowSize1,.noOfStdDev,.form-div7,.description-BBChart').show();
   }
 else if ($(this).val() == "MovingAve") {
-$('.windowSize2,.windowSize3,.noOfStdDev,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier').hide();
+$('.windowSize2,.windowSize3,.noOfStdDev,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-factorAnalysis,.factorAnalysis').hide();
 $('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.averagetype,.windowSize1,.form-div7,.description-MovingAve').show();
   }
 else if ($(this).val() == "ARIMAGARCH") {
-$('.windowSize2,.windowSize3,.noOfStdDev,.noOfIter,.percentilerange,.averagetype,.windowSize1,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
+$('.windowSize2,.windowSize3,.noOfStdDev,.noOfIter,.percentilerange,.averagetype,.windowSize1,.riskfreerate,.simMethod,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist,.description-factorAnalysis,.factorAnalysis').hide();
 $('.tickers,.weights,.portfoliovalue,.startend,.forecastdate,.backtestdays,.form-div7,.description-ARIMAGARCH').show();
   }
 else if ($(this).val() == "MACDChart") {
-$('.noOfStdDev,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.averageType,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist').hide();
+$('.noOfStdDev,.weights,.portfoliovalue,.forecastdate,.backtestdays,.noOfIter,.percentilerange,.riskfreerate,.simMethod,.averageType,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontier,.description-EfficientFrontierHist,.description-factorAnalysis,.factorAnalysis').hide();
 $('.tickers,.startend,.windowSize1,.windowSize2,.windowSize3,.form-div7,.description-MACDChart').show();
   }
 else if ($(this).val() == "EfficientFrontierHist") {
-$('.averagetype,.windowSize1, .windowSize2,.windowSize3, .noOfStdDev,.weights,.backtestdays,.percentilerange,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.forecastdate,.simMethod').hide();
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3, .noOfStdDev,.weights,.backtestdays,.percentilerange,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.forecastdate,.simMethod,.description-factorAnalysis,.factorAnalysis').hide();
 $('.tickers,.portfoliovalue,.startend,.noOfIter,.riskfreerate,.form-div7,.description-EfficientFrontierHist').show();
   }
+else if ($(this).val() == "factorAnalysis") {
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3, .noOfStdDev,.weights,.backtestdays,.percentilerange,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.forecastdate,.simMethod,.portfoliovalue,.startend,.noOfIter,.riskfreerate,.description-EfficientFrontierHist').hide();
+$('.tickers,.description-factorAnalysis,.factorAnalysis,.form-div7').show();
+  }
 else if ($(this).val() == "EfficientFrontier") {
-$('.averagetype,.windowSize1, .windowSize2,.windowSize3, .noOfStdDev,.weights,.backtestdays,.percentilerange,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontierHist').hide();
+$('.averagetype,.windowSize1, .windowSize2,.windowSize3, .noOfStdDev,.weights,.backtestdays,.percentilerange,.seasonality,.description-candlestickChart,.description-returnsDist,.description-RSIChart,.description-MACDChart,.description-BBChart,.description-MovingAve,.description-ARIMAGARCH,.description-HoltWinters,.description-VecAR,.description-GBM,.description-Bootstrap,.description-EfficientFrontierHist,.description-factorAnalysis,.factorAnalysis').hide();
 $('.tickers,.portfoliovalue,.startend,.forecastdate,.noOfIter,.riskfreerate,.simMethod,.form-div7,.description-EfficientFrontier').show();
   }
 });
@@ -108,8 +112,8 @@ EndDate.addEventLiseter('change', function() {
 <body>
     
 <h1>Stock Price Simulator</h1>
-<p><img src="https://i.kym-cdn.com/entries/icons/facebook/000/029/959/Screen_Shot_2019-06-05_at_1.26.32_PM.jpg" alt="Stonks | Know Your Meme" width="621" height="350" /></p>
-<p><a href="https://knowyourmeme.com/memes/stonks" target="_blank" rel="noopener">Image Source:KnowYourMeme.com</a></p>
+<p><img src="https://media.giphy.com/media/YnkMcHgNIMW4Yfmjxr/giphy.gif" alt="Stonks | Know Your Meme" width="640" height="350" /></p>
+<p><a href="https://giphy.com/gifs/stonks-stonk-YnkMcHgNIMW4Yfmjxr" target="_blank" rel="noopener">Image Source:Giphy.com</a></p>
 <p>&nbsp;</p>
 <p>Hi ! I'm Z and this is a simple Stock Price Forecasting Web App that I built for fun using a combination of code from different online articles (sources listed below) and some of my own original code.</p>
 <p>&nbsp;</p>
@@ -135,6 +139,7 @@ I want to run a/an </label><select name="mainSelection" id="mainSelection">
 <option value="RSIChart">...Analysis > Relative Strength Index Chart (RSI) </option>
 <option value="MACDChart">...Analysis > Moving Average Convergence Divergence (MACD) </option>
 <option value="BBChart">...Analysis > Bollinger Bands Chart </option>
+<option value="factorAnalysis">...Analysis > Multi Factor Stock Scoring & Ranking </option>
 <option value="MovingAve">...Forecast > Moving Average Forecast (Univariate)</option>
 <option value="ARIMAGARCH">...Forecast > Auto-ARIMA+GARCH Forecast (Univariate)</option>
 <option value="HoltWinters">...Forecast > Auto-Holt Winters Forecast (Univariate)</option>
@@ -227,6 +232,1274 @@ I want to run a/an </label><select name="mainSelection" id="mainSelection">
 <option value="GBM" selected="selected">GBM</option>
 <option value="Bootstrap">Bootstrap</option>
 </select>
+</div>
+    
+<div class="factorAnalysis"> 
+<p>Note - Please be patient as this needs about 1-2 minutes to run (1-2secs per stock)</p>
+<p>Works best for ~30-50 counters </p>
+<p>e.g. For a mix of 50 different SP500 Tech Stocks : AAPL, ACN, ADBE, ADSK, AKAM, AMD, AVGO, BR, CDW, CRM, CSCO, CTSH, CTXS, DXC, ENPH, FFIV, FIS, FISV, FLIR, FLT, FTNT, GLW, GPN, HPE, HPQ, IBM, INTC, INTU, IT, JNPR, MA, MCHP, MSFT, MSI, MU, NOW, NTAP, NVDA, ORCL, PYPL, QCOM, STX, SWKS, TER, TXN, V, VRSN, WU, XRX, ZBRA
+ </p>
+        
+<label for="NormMethod">
+Select Normalisation Method </label><select name="NormMethod" id="NormMethod">
+<option value="" disabled="disabled" selected="selected">--</option>
+<option value="Z-Score Normalization + Additive Composite">Z-Score Normalization + Additive Composite </option>
+<option value="MinMax Normalization + Additive Composite">MinMax Normalization + Additive Composite </option>
+<option value="Percentile Normalization + Additive Composite">Percentile Normalization + Additive Composite </option>
+<option value="MinMax Normalization + Multiplicative Composite">MinMax Normalization + Multiplicative Composite </option>
+</select>
+
+<br>
+<br>
+    
+<table>
+
+<thead>
+    <tr>
+        <th>Description</th><th>Select</th><th>Choose Hi/Lo</th><th>Factor Weight<br></th>
+    </tr>
+</thead>
+
+<tbody>
+    <tr><td colspan=“4”><b>Valuation Measures</b></td></tr>   
+    <tr>
+        <td>
+            Market Cap (intraday)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Market Cap (intraday) 5" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr>
+        <td>
+            Enterprise Value
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Enterprise Value 3" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+        <tr>
+        <td>
+            Trailing P/E
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Trailing P/E" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr>
+        <td>
+            Forward P/E
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Forward P/E 1" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr>
+        <td>
+            PEG Ratio (5 yr expected)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="PEG Ratio (5 yr expected) 1" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr>
+        <td>
+            Price/Sales (ttm)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Price/Sales (ttm)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr>
+        <td>
+            Price/Book (mrq)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Price/Book (mrq)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+        
+    <tr>
+        <td>
+            Enterprise Value/Revenue
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Enterprise Value/Revenue 3" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>    
+        
+    <tr>
+        <td>
+            Enterprise Value/EBITDA
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Enterprise Value/EBITDA 6" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>    
+    
+    <tr><td colspan=“4”><b>Financial Highlights</b></td></tr>   
+    <tr><td colspan=“4”><b>Fiscal Year</b></td></tr>   
+    
+    <tr>
+        <td>
+            Fiscal Year End Date
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Fiscal Year Ends" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr> 
+    
+    <tr>
+        <td>
+            Most Recent Quarter (mrq) Date
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Most Recent Quarter (mrq)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    <tr><td colspan=“4”><b>Profitability</b></td></tr>      
+    <tr>
+        <td>
+            Profit Margin
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Profit Margin" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr>
+        <td>
+            Operating Margin (ttm)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Operating Margin (ttm)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    <tr><td colspan=“4”><b>Management Effectiveness</b></td></tr>   
+    
+    <tr>
+        <td>
+            Return on Assets (ttm)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Return on Assets (ttm)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr>
+        <td>
+            Return on Equity (ttm)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Return on Equity (ttm)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr><td colspan=“4”><b>Income Statement</b></td></tr>   
+        
+    <tr>
+        <td>
+            Revenue (ttm)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Revenue (ttm)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr>
+        <td>
+            Revenue Per Share (ttm)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Revenue Per Share (ttm)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr>
+        <td>
+            Quarterly Revenue Growth (yoy)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Quarterly Revenue Growth (yoy)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr>
+        <td>
+            Gross Profit (ttm)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Gross Profit (ttm)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr>
+        <td>
+            EBITDA
+        </td>
+        
+        <td>
+            <input type="checkbox" value="EBITDA" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr>
+        <td>
+            Net Income Avi to Common (ttm)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Net Income Avi to Common (ttm)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr>
+        <td>
+            Diluted EPS (ttm)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Diluted EPS (ttm)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+        <tr>
+        <td>
+            Quarterly Earnings Growth (yoy)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Quarterly Earnings Growth (yoy)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr><td colspan=“4”><b>Balance Sheet</b></td></tr>       
+    <tr>
+        <td>
+            Total Cash (mrq)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Total Cash (mrq)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+        <tr>
+        <td>
+            Total Cash Per Share (mrq)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Total Cash Per Share (mrq)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+        <tr>
+        <td>
+            Total Debt (mrq)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Total Debt (mrq)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+        <tr>
+        <td>
+            Total Debt/Equity (mrq)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Total Debt/Equity (mrq)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+        <tr>
+        <td>
+            Current Ratio (mrq)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Current Ratio (mrq)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+        <tr>
+        <td>
+            Book Value Per Share (mrq)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Book Value Per Share (mrq)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr><td colspan=“4”><b>Cash Flow Statement</b></td></tr>
+    
+    <tr>
+        <td>
+            Operating Cash Flow (ttm)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Operating Cash Flow (ttm)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+        <tr>
+        <td>
+            Levered Free Cash Flow (ttm)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Levered Free Cash Flow (ttm)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr><td colspan=“4”><b>Stock Price History</b></td></tr>
+    
+    <tr>
+        <td>
+            Beta (5Y Monthly)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Beta (5Y Monthly)" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+        <tr>
+        <td>
+            52-Week Change
+        </td>
+        
+        <td>
+            <input type="checkbox" value="52-Week Change 3" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+        <tr>
+        <td>
+            52 Week High
+        </td>
+        
+        <td>
+            <input type="checkbox" value="52 Week High 3" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+        <tr>
+        <td>
+            52 Week Low
+        </td>
+        
+        <td>
+            <input type="checkbox" value="52 Week Low 3" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+        <tr>
+        <td>
+            50-Day Moving Average
+        </td>
+        
+        <td>
+            <input type="checkbox" value="50-Day Moving Average 3" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+        <tr>
+        <td>
+            200-Day Moving Average
+        </td>
+        
+        <td>
+            <input type="checkbox" value="200-Day Moving Average 3" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr><td colspan=“4”><b>Share Statistics</b></td></tr>
+ 
+        <tr>
+        <td>
+            Avg Vol (3 month)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Avg Vol (3 month) 3" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+        <tr>
+        <td>
+            Avg Vol (10 day)
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Avg Vol (10 day) 3" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+        <tr>
+        <td>
+            Shares Outstanding
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Shares Outstanding 5" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr>
+        <td>
+            Float
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Float" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr>
+        <td>
+            % Held by Insiders
+        </td>
+        
+        <td>
+            <input type="checkbox" value="% Held by Insiders 1" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>    
+    
+    <tr>
+        <td>
+            % Held by Institutions
+        </td>
+        
+        <td>
+            <input type="checkbox" value="% Held by Institutions 1" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>       
+    
+    <tr><td colspan=“4”><b>Dividends and Splits</b></td></tr>
+
+    <tr>
+        <td>
+            Forward Annual Dividend Rate
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Forward Annual Dividend Rate 4" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>   
+    
+    <tr>
+        <td>
+            Forward Annual Dividend Yield
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Forward Annual Dividend Yield 4" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>   
+    
+    <tr>
+        <td>
+            Trailing Annual Dividend Rate
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Trailing Annual Dividend Rate 3" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>   
+    
+    <tr>
+        <td>
+            Trailing Annual Dividend Yield
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Trailing Annual Dividend Yield 3" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+       <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>   
+    
+    <tr>
+        <td>
+            5 Year Average Dividend Yield
+        </td>
+        
+        <td>
+            <input type="checkbox" value="5 Year Average Dividend Yield 4" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>
+    
+    <tr>
+        <td>
+            Payout Ratio
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Payout Ratio 4" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr> 
+    
+        <tr>
+        <td>
+            Dividend Date
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Dividend Date 3" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr> 
+    
+        <tr>
+        <td>
+            Ex-Dividend Date
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Ex-Dividend Date 4" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>     
+    
+        <tr>
+        <td>
+            Last Split Factor
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Last Split Factor 2" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>     
+    
+        <tr>
+        <td>
+            Last Split Date
+        </td>
+        
+        <td>
+            <input type="checkbox" value="Last Split Date 3" name='chosen[]'>
+        </td>
+        
+        <td>
+            <select name="hiOrLo[]">
+              <option>NA</option>
+              <option>Highest</option>
+              <option>Lowest</option>
+             </select>
+        </td>
+        
+        <td>
+            <input name="factorweight[]" type="number" value="0.0" max=100.0 min=0.0 step=0.1>
+        </td>
+        
+    </tr>         
+    
+</tbody>
+
+</table>
 </div>
 
 <br />
@@ -716,6 +1989,37 @@ I want to run a/an </label><select name="mainSelection" id="mainSelection">
 <p>&nbsp;</p>
 <p><img src="https://4.bp.blogspot.com/--g39PHMInNk/WQLRxfZL8sI/AAAAAAAAAAk/yl-nil4ULS4SAthVNLu6GRD-QckW2YCAwCLcB/s640/03.png" /></p>
 <p>Image Source:<a href="http://datascience.uconn.edu/index.php/projects/students-work/item/61-markowitz-portfolio-construction">http://datascience.uconn.edu/index.php/projects/students-work/item/61-markowitz-portfolio-construction</a>&nbsp;</p>
+</div>
+
+<div class="description-factorAnalysis">    
+<p>&nbsp;</p>    
+<table style="border-collapse: collapse; width: 100%; height: 33px;" border="1">
+<tbody>
+<tr>
+<th style="width: 11.5136%;">Type</th>
+<th style="width: 18.1469%;">Title</th>
+<th style="width: 39.8268%;">Description</th>
+<th style="width: 1.42045%;">More Detailed References</th>
+<th style="width: 34.9373%;">Source Code</th>
+</tr>
+<tr>
+<td style="width: 11.5136%;">Analysis</td>
+<td style="width: 18.1469%;">Multi Factor Ranking &amp; Screening</td>
+<td style="width: 39.8268%;">
+<p>User makes a selection of relevant factors (key statistics from Yahoo Finance); a choice of factor weights ; normalization method (Z Score, Min-Max, Percentile) ; and aggregation type( Additive or Multiplicative.</p>
+<p>The code then calculates a composite score for each stock and ranks them to determine the "Top Quartile" stocks and compares them to the latest Annual y.o.y Stock Return&nbsp;</p>
+<p>&nbsp;</p>
+</td>
+<td style="width: 1.42045%;"><a href="https://www.investopedia.com/terms/f/factor-investing.asp" target="_blank" rel="noopener">Factor Investing (Source:Investopedia)</a></td>
+<td style="width: 34.9373%;">Based on some original code hosted on the google colab here :<br /><a href="https://colab.research.google.com/drive/1xgpx0TP6nTb_C2b4kgKLpAWMh1wbWjXs?usp=sharing" target="_blank" rel="noopener">Colab Workbook</a></td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p><img src="https://cdn-images-1.medium.com/max/1320/1*AUApxSG4ai0ogVqRUl4n0g.png " width="690" height="260" /></p>
+<p><img src="https://cdn-images-1.medium.com/max/1320/1*sgqqBAAENIYdxvHQB2gFlw.png" width="690" height="380" /></p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="https://cdn-images-1.medium.com/max/880/1*z97SeIR6v7kmuNgWM4BKrQ.png" width="401" height="214" /></p>
+<p>&nbsp;</p>    
 </div>
     
 <hr>

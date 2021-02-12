@@ -13,6 +13,8 @@ The full list of features are:-
 
 ...Analysis > Bollinger Bands Chart 
 
+...Analysis > Multi Factor Stock Screening & Ranking
+
 ...Forecast > Moving Average Forecast (Univariate)
 
 ...Forecast > Auto-ARIMA+GARCH Forecast (Univariate)
